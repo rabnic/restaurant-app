@@ -1,11 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import HomeScreen from './screens/HomeScreen';
-import { PaperProvider, Text } from 'react-native-paper';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import HomeScreen from "./screens/HomeScreen";
+import { PaperProvider, Text } from "react-native-paper";
 
 export default function App() {
   return (
-    <PaperProvider>
+    <PaperProvider style={styles.container}>
       <HomeScreen />
     </PaperProvider>
     // <View style={styles.container}>
@@ -18,8 +18,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
