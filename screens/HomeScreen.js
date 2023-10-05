@@ -13,7 +13,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Carousel from "react-native-snap-carousel-v4";
+import Carousel from "react-native-snap-carousel";
 import PromotionCard from "../components/cards/PromotionCard";
 import CategoryCard from "../components/cards/CategoryCard";
 import { menu, mainPromos } from "../database/dummyData";
