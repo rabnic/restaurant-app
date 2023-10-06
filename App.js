@@ -3,6 +3,8 @@ import { StyleSheet, View } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import UserProfile from "./screens/UserProfile";
 import MenuItemDetailScreen from "./screens/MenuItemDetailScreen";
+import CartScreen from "./screens/CartScreen";
+
 import { PaperProvider, Text } from "react-native-paper";
 
 export default function App() {
@@ -12,7 +14,7 @@ export default function App() {
 
       {/* <HomeScreen /> */}
       {/* <UserProfile /> */}
-      <MenuItemDetailScreen />
+      <CartScreen />
     </PaperProvider>
     // <View style={styles.container}>
     //   <Text className='font-extrabold text-teal-700'>Open up App.js to start working on your app!</Text>
