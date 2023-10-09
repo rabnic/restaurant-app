@@ -1,48 +1,137 @@
-import { StyleSheet, View, SafeAreaView, Image } from 'react-native'
-import React from 'react'
-import { Button, Text, } from 'react-native-paper'
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { styled } from 'nativewind';
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
+import React from "react";
+import {
+  Button,
+  Text,
+  Divider,
+  TextInput,
+  SegmentedButtons,
+} from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
+import CartItemCard from "../components/cards/CartItemCard";
+
+import { styled } from "nativewind";
 
 const CartScreen = () => {
-    const StyledView = styled(View);
-    return (
-        <SafeAreaView className="pt-12 px-4 flex-1 w-screen">
-            <View className="w-full justify-center flex-row p-3 mb-2">
-                <Text variant='headlineMedium' className="font-extrabold">Cart</Text>
+  const [value, setValue] = React.useState("");
+  const StyledView = styled(View);
+  return (
+    <SafeAreaView className="pt-12 pb-6 px-2 flex-1 relative">
+      <ScrollView
+        className="flex-1 "
+        showsVerticalScrollIndicator={false}
+        // contentContainerStyle={{ flex: 1 }}
+      >
+        <View className="w-full justify-center flex-row p-3 mb-2">
+          <Text variant="headlineMedium" className="font-extrabold">
+            Cart
+          </Text>
+        </View>
+        <View className="flex-1 w-full p-1 flex-col h-full">
+          <CartItemCard />
+          <CartItemCard />
+          <CartItemCard />
+          {/* <CartItemCard />
+          <CartItemCard />
+          <CartItemCard /> */}
+          <Divider className="my-3" />
+          <Text variant="bodyLarge" className="font-bold">
+            Special instruction:
+          </Text>
+          <TextInput
+            multiline
+            underlineColor="red"
+            activeOutlineColor="#aaa"
+            style={{
+              paddingTop: 10,
+              backgroundColor: "#fff",
+              borderColor: "#ccc",
+            }}
+            mode="outlined"
+            placeholder="Example: Extra mayo sauce..."
+            numberOfLines={4}
+            //   value={"Description"}
+            onChangeText={(Description) => {}}
+          />
+          <SegmentedButtons
+            className="mt-4"
+            value={value}
+            onValueChange={setValue}
+            buttons={[
+              {
+                value: "delivery",
+                label: "Delivery",
+              },
+              {
+                value: "pickup",
+                label: "Pick up",
+              },
+            ]}
+          />
+          <View className="rounded mt-4 p-3 bg-gray-200 w-full h-auto flex-col">
+            <View className="flex-row justify-between">
+              <Text variant="bodyMedium" className="font-bold">
+                Subtotal:
+              </Text>
+              <Text variant="bodyMedium" className="font-bold">
+                R115.00
+              </Text>
             </View>
-            <StyledView className="flex-1 w-full p-1 flex-col gap-2">
-                <StyledView className="w-full h-32 flex-row rounded-lg shadow border p-2 gap-1 mx-auto">
-                    <View className="flex-1 rounded-lg">
-                        <Image source={require("../assets/menu-images/burgers/triple-trouble.jpg")} className="h-full w-full rounded-lg" resizeMode='cover' />
+            <View className="flex-row justify-between my-2">
+              <Text variant="bodyMedium" className="font-bold">
+                Delivery:
+              </Text>
+              <Text variant="bodyMedium" className="font-bold">
+                {value === "delivery" ? "R25.00" : "R0.00"}
+              </Text>
+            </View>
+            <Divider />
+            <View className="flex-row justify-between mt-1">
+              <Text variant="bodyMedium" className="font-bold">
+                Total:
+              </Text>
+              <Text variant="bodyMedium" className="font-bold">
+                R140.00
+              </Text>
+            </View>
+          </View>
+          <Button
+            style={{ marginTop: 55 }}
+            mode="contained"
+            buttonColor="#DD5A44"
+            uppercase={true}
+            onPress={() => console.log("Pressed")}
+            contentStyle={{ marginHorizontal: 4, height: 50 }}
+          >
+            Checkout
+          </Button>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-                    </View>
-                    <View className="flex-[2] p-2  flex-col justify-around relative">
-                        {/* <MaterialCommunityIcons name="trash-can" size={24} color="#D8423E" style={{ position: "absolute", top: 0, right: 5 }} /> */}
-                        <View className="flex-1 flex-col justify-around">
-                            <Text variant='bodyLarge' className="font-bold mb-2">Mexicano Burger Burge Burge</Text>
-                            <Text variant='bodyMedium'>Something nice</Text>
-                        </View>
-                        <View className="flex-1 flex-row justify-between items-center">
-                            <Text variant='labelLarge' className=" font-bold"> R55.00</Text>
-                            <View className="flex-row rounded-2xl p-2 justify-between items-center w-28" style={{ backgroundColor: "#D1D1D1" }}>
-                                <AntDesign name="minus" size={24} color="#DD5A44" />
-                                <Text variant="bodyLarge" className="font-bold">1</Text>
-                                <AntDesign name="plus" size={24} color="#DD5A44" />
-                            </View>
-                        </View>
-                    </View>
-                </StyledView>
-            </StyledView>
-        </SafeAreaView>
-    )
-}
+export default CartScreen;
 
-export default CartScreen
+const styles = StyleSheet.create({
+  cartItemShadow: {
+    shadowColor: "#000",
+    backgroundColor: "#fff",
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 16.27,
 
-const styles = StyleSheet.create({})
+    elevation: 10,
+  },
+});
