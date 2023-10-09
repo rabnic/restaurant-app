@@ -5,6 +5,9 @@ import UserProfile from "./screens/UserProfile";
 import MenuItemDetailScreen from "./screens/MenuItemDetailScreen";
 import OnboardingScreen from "./screens/OnboardingScreen";
 import CartScreen from "./screens/CartScreen";
+import SignInScreen from "./screens/SignInScreen";
+import SplashScreen from "./screens/SplashScreen";
+
 
 import { PaperProvider, Text } from "react-native-paper";
 
@@ -15,8 +18,10 @@ export default function App() {
 
       {/* <HomeScreen /> */}
       {/* <UserProfile /> */}
-      <CartScreen />
+      {/* <CartScreen /> */}
       {/* <OnboardingScreen /> */}
+      <SignInScreen />
+      {/* <SplashScreen /> */}
     </PaperProvider>
     // <View style={styles.container}>
     //   <Text className='font-extrabold text-teal-700'>Open up App.js to start working on your app!</Text>
