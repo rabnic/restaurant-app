@@ -12,8 +12,7 @@ import * as Font from "expo-font";
 
 SplashScreen.preventAutoHideAsync();
 
-const SignInScreen = () => {
-  // const [fontsLoaded, setFontsLoaded] = useState(false);
+const SignUpScreen = () => {
   // const [fontsLoaded, fontError] = useFonts({
   //   Lobster_400Regular,
   // });
@@ -50,7 +49,7 @@ const SignInScreen = () => {
           className="my-3 p-1 tracking-widest"
           style={{ fontFamily: "Lobster-Regular" }}
         >
-          Sign In
+          Sign Up
         </Text>
         <View className="flex-[2] w-full flex-col gap-4">
           <TextInput
@@ -73,9 +72,15 @@ const SignInScreen = () => {
             placeholder="*******"
             style={{ backgroundColor: "whitesmoke" }}
           />
-          <Text className="mt-4 self-center text-[#DD5A44]" variant="bodyLarge">
+          <TextInput
+            mode="outlined"
+            label="Phone Number"
+            placeholder="0812345678"
+            style={{ backgroundColor: "whitesmoke" }}
+          />
+          {/* <Text className="mt-4 self-center text-[#DD5A44]" variant="bodyLarge">
             Forgot your password?
-          </Text>
+          </Text> */}
         </View>
         <View className="flex-1 w-full  flex-col items-center justify-around">
           <Button
@@ -89,10 +94,10 @@ const SignInScreen = () => {
               height: 50,
             }}
           >
-            Sign In
+            Sign Up
           </Button>
           <Text variant="bodyLarge" className="text-[#DD5A44]">
-            Don't have a account? Sign Up
+            Already have an account? Sign In
           </Text>
         </View>
       </View>
@@ -100,6 +105,6 @@ const SignInScreen = () => {
   );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({});
