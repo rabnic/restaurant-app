@@ -10,7 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const SignUpScreen = () => {
   // const [fontsLoaded, fontError] = useFonts({

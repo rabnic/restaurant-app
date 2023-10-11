@@ -33,18 +33,20 @@ const HomeScreen = () => {
 
   const renderItem = ({ item, index }) => (
     <Card className="w-[100%] bg-slate-600 self-center relative">
-      <Card.Cover
-        source={require("../assets/menu-images/burgers/triple-trouble.jpg")}
-      />
+      <Card.Cover source={{ uri: item.image }} />
       <View
         className="w-[100%] h-[100%] absolute flex-col items-center rounded-xl p-2"
         style={{ backgroundColor: "rgba(0,0,0,.3)" }}
       >
-        <Text variant="headlineMedium" className="text-white font-bold ">
+        <Text
+          variant="headlineMedium"
+          className="text-white font-bold "
+          style={{ fontFamily: "Lobster-Regular" }}
+        >
           {item.title}
         </Text>
         <Text variant="bodyLarge" className="text-gray-200 font-bold ">
-          {item.discout}% off
+          {item.discount}% off
         </Text>
         <Text variant="bodyMedium" className="text-gray-300 font-bold mt-auto">
           *{item.extraInfo}
@@ -90,7 +92,7 @@ const HomeScreen = () => {
       </View>
 
       <View className="mb-4 flex-row w-[100%] max-w-[100%] justify-center items-center">
-        {/* <Carousel
+        <Carousel
           layout={"default"}
           ref={carouselRef}
           data={mainPromos}
@@ -98,7 +100,7 @@ const HomeScreen = () => {
           itemWidth={wp(85)}
           renderItem={renderItem}
           onSnapToItem={onSnapToItem}
-        /> */}
+        />
         {/* <Card className="w-[100%] bg-slate-600 self-center relative">
                     <Card.Cover
                         source={require("../assets/menu-images/burgers/triple-trouble.jpg")}

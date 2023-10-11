@@ -10,32 +10,32 @@ import * as SplashScreen from "expo-splash-screen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const SignInScreen = () => {
   // const [fontsLoaded, setFontsLoaded] = useState(false);
   // const [fontsLoaded, fontError] = useFonts({
   //   Lobster_400Regular,
   // });
-  const [fontsLoaded, fontError] = useFonts({
-    "Lobster-Regular": require("../assets/fonts/Lobster-Regular.ttf"),
-    GoodDogNew: require("../assets/fonts/GoodDogNew.ttf"),
-  });
+  // const [fontsLoaded, fontError] = useFonts({
+  //   "Lobster-Regular": require("../assets/fonts/Lobster-Regular.ttf"),
+  //   GoodDogNew: require("../assets/fonts/GoodDogNew.ttf"),
+  // });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded || fontError) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
     <SafeAreaView
       className="flex-1 bg-[#F4E1D5] flex-col"
-      onLayout={onLayoutRootView}
+      // onLayout={onLayoutRootView}
     >
       <View className="flex-1 justify-center items-center">
         <Image
