@@ -6,8 +6,10 @@ import CartScreen from "../screens/CartScreen";
 import SignInScreen from "../screens/SignInScreen";
 import UserProfile from "../screens/UserProfile";
 
-const BottomNavigationLocal = () => {
-  const [index, setIndex] = useState(1);
+const BottomNavigationLocal = ({route, navigation}) => {
+    console.log('route',route);
+    console.log('navigation',navigation);
+  const [index, setIndex] = useState(0);
   const [routes] = useState([
     {
       key: "home",
@@ -39,7 +41,7 @@ const BottomNavigationLocal = () => {
   theme.colors.secondaryContainer = "transparent";
 
   const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
+    home: () => <HomeScreen navigation={navigation}/>,
     cart: CartScreen,
     favorites: SignInScreen,
     profile: UserProfile,

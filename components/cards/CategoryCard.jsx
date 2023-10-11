@@ -6,7 +6,7 @@ function CategoryCard({category, image, selectedCategory}) {
     return (
         <View className={`flex-col items-center mr-8 pb-1 ${category == selectedCategory ? 'border-b-2' : ''}`} >
             <Avatar.Image
-                source={require('../../assets/menu-images/burgers/seeded-double.jpg')}
+                source={{uri: image}}
                 size={55}
             />
             <Text variant="bodyMedium" className={`font-semibold tracking-widest ${category == selectedCategory ? 'text-[#DD5A44] font-bold' : ''}`}>

@@ -22,12 +22,13 @@ import {
 } from "react-native-responsive-screen";
 import Carousel from "react-native-snap-carousel";
 import PromotionCard from "../components/cards/PromotionCard";
-import CategoryCard from "../components/cards/CategoryCard";
-import { menu, mainPromos } from "../database/dummyData";
+import { mainPromos, menu } from "../database/dummyData";
+import CategoryList from "../components/CategoryList";
+import RefreshmentCard from "../components/cards/RefreshmentCard";
 
-const HomeScreen = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
+const HomeScreen = ({route, navigation}) => {
   const [activeIndex, setActiveIndex] = useState(1);
+  const [activeCategoryId, setActiveCategoryId] = useState();
 
   const carouselRef = useRef(null);
 
@@ -59,16 +60,6 @@ const HomeScreen = () => {
     setActiveIndex(index);
   };
 
-  const categoryData = () => {
-    return Object.keys(menu).map((key) => {
-      return {
-        categoryId: key,
-        category: menu[key].category,
-        image: menu[key].image,
-      };
-    });
-  };
-
   return (
     <SafeAreaView className="flex-1 pt-12 px-3 flex-col">
       <StatusBar style="auto" />
@@ -85,7 +76,7 @@ const HomeScreen = () => {
       <View className="mb-4">
         <Searchbar
           placeholder="Search food"
-          onChangeText={() => {}}
+          onChangeText={() => { }}
           value={""}
           className="bg-transparent border border-gray-300"
         />
@@ -101,98 +92,42 @@ const HomeScreen = () => {
           renderItem={renderItem}
           onSnapToItem={onSnapToItem}
         />
-        {/* <Card className="w-[100%] bg-slate-600 self-center relative">
-                    <Card.Cover
-                        source={require("../assets/menu-images/burgers/triple-trouble.jpg")}
-                    />
-                    <View
-                        className="w-[100%] h-[100%] absolute flex-col items-center rounded-xl p-2"
-                        style={{ backgroundColor: "rgba(0,0,0,.3)" }}
-                    >
-                        <Text variant="headlineMedium" className="text-white font-bold ">
-                            Friends of 3s
-                        </Text>
-                        <Text variant="bodyLarge" className="text-gray-200 font-bold ">
-                            30% off
-                        </Text>
-                        <Text
-                            variant="bodyMedium"
-                            className="text-gray-300 font-bold mt-auto"
-                        >
-                            *suitable for 3 people
-                        </Text>
-                    </View>
-                </Card> */}
       </View>
 
       <View className="mb-4 flex-row w-[100%] justify-between h-auto">
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={categoryData()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => setSelectedCategory(item.category)}
-            >
-              <CategoryCard
-                selectedCategory={selectedCategory}
-                image={item.image}
-                category={item.category}
-              />
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.categoryId}
-        />
+        <CategoryList setActiveCategoryId={setActiveCategoryId} />
       </View>
-      <View className="flex-row flex-1 gap-2 flex-wrap">
-        <Card className="w-[50%] bg-white" style={{ height: hp(20) }}>
+
+      <View className="flex-1 w-full">
+        
+        {
+          activeCategoryId &&
+          <FlatList
+          
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+            data={menu[activeCategoryId].items}
+            renderItem={({ item, index }) => (
+                <RefreshmentCard refreshment={item} navigation={navigation} menuItemId={index}/>
+            )}
+            keyExtractor={(item) => item.name}
+          />
+        }
+
+
+        {/* <Card className="w-[50%] bg-white" style={{ height: hp(20) }}>
           <Card.Cover
-            source={require("../assets/menu-images/cold-drinks/coke.jpg")}
-            className="h-[60%]"
+            source={{uri: menu[activeCategoryId].items[0].image}}
+            className="h-[65%] border-b border-x border-gray-100"
           />
           <Card.Content className="mt-2">
-            <Text variant="bodyLarge">Coca-cola 1 x 300ml Bottle</Text>
+            <Text variant="bodyLarge">{menu[activeCategoryId].items[0].name}</Text>
             <Text variant="bodyMedium" className="font-bold ml-auto">
-              R9.50
+              R{menu[activeCategoryId].items[0].price}
             </Text>
           </Card.Content>
-        </Card>
-        <Card className="w-[45%] bg-white" style={{ height: hp(20) }}>
-          <Card.Cover
-            source={require("../assets/menu-images/cold-drinks/beetie-huice.jpg")}
-            className="h-[60%]"
-          />
-          <Card.Content className="mt-2">
-            <Text variant="bodyLarge">Coca-cola 1 x 300ml Bottle</Text>
-            <Text variant="bodyMedium" className="font-bold ml-auto">
-              R9.50
-            </Text>
-          </Card.Content>
-        </Card>
-        <Card className="w-[45%] bg-white" style={{ height: hp(20) }}>
-          <Card.Cover
-            source={require("../assets/menu-images/cold-drinks/sping-water.jpg")}
-            className="h-[60%]"
-          />
-          <Card.Content className="mt-2">
-            <Text variant="bodyLarge">Coca-cola 1 x 300ml Bottle</Text>
-            <Text variant="bodyMedium" className="font-bold ml-auto">
-              R9.50
-            </Text>
-          </Card.Content>
-        </Card>
-        <Card className="w-[50%] bg-white" style={{ height: hp(20) }}>
-          <Card.Cover
-            source={require("../assets/menu-images/cold-drinks/greenie-juice.jpg")}
-            className="h-[60%]"
-          />
-          <Card.Content className="mt-2">
-            <Text variant="bodyLarge">Coca-cola 1 x 300ml Bottle</Text>
-            <Text variant="bodyMedium" className="font-bold ml-auto">
-              R9.50
-            </Text>
-          </Card.Content>
-        </Card>
+        </Card>  */}
+
       </View>
     </SafeAreaView>
   );
