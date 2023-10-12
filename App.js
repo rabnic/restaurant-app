@@ -17,19 +17,20 @@ import MainNavigation from "./navigation/StandaloneNavigation";
 
 import { loadFonts } from "./utils/fonts";
 
+import { CartProvider } from "./contexts/CartContext";
+
 export default function App() {
   const fontsLoaded = loadFonts();
 
   if (!fontsLoaded) return null;
 
   return (
-    <PaperProvider style={styles.container}>
-      <StatusBar style="auto" />
-      {/* <BottomNavigationLocal /> */}
-      {/* <StandaloneNavigation /> */}
-      {/* <MenuItemDetailScreen /> */}
-      <MainNavigation />
-    </PaperProvider>
+    <CartProvider>
+      <PaperProvider style={styles.container}>
+        <StatusBar style="auto" />
+        <MainNavigation />
+      </PaperProvider>
+    </CartProvider>
   );
 }
 

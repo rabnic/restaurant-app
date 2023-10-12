@@ -1,4 +1,10 @@
-import { StyleSheet, View, SafeAreaView, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+} from "react-native";
 import React, { useCallback, useState } from "react";
 import {
   widthPercentageToDP as wp,
@@ -34,9 +40,10 @@ const SignInScreen = () => {
 
   return (
     <SafeAreaView
-      className="flex-1 bg-[#F4E1D5] flex-col"
+      className="flex-1 bg-[#F4E1D5] flex-col h-screen"
       // onLayout={onLayoutRootView}
     >
+      {/* <ScrollView className="h-screen w-full flex-col"> */}
       <View className="flex-1 justify-center items-center">
         <Image
           resizeMode="cover"
@@ -96,6 +103,7 @@ const SignInScreen = () => {
           </Text>
         </View>
       </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
