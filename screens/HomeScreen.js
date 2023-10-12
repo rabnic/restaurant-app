@@ -103,35 +103,29 @@ const HomeScreen = ({ route, navigation }) => {
           <CategoryList setActiveCategoryId={setActiveCategoryId} />
         </View>
 
-        <View className="flex-1 w-full">
+        <View className="flex-1 w-full flex-row flex-wrap">
           {activeCategoryId && (
-            <FlatList
-              numColumns={2}
-              showsVerticalScrollIndicator={false}
-              data={menu[activeCategoryId].items}
-              renderItem={({ item, index }) => (
-                <RefreshmentCard
+            menu[activeCategoryId].items.map((item,index) => (
+              <RefreshmentCard
                   refreshment={item}
                   navigation={navigation}
                   menuItemId={index}
                 />
-              )}
-              keyExtractor={(item) => item.name}
-            />
+            ))
+            // <FlatList
+            //   numColumns={2}
+            //   showsVerticalScrollIndicator={false}
+            //   data={menu[activeCategoryId].items}
+            //   renderItem={({ item, index }) => (
+            //     <RefreshmentCard
+            //       refreshment={item}
+            //       navigation={navigation}
+            //       menuItemId={index}
+            //     />
+            //   )}
+            //   keyExtractor={(item) => item.name}
+            // />
           )}
-
-          {/* <Card className="w-[50%] bg-white" style={{ height: hp(20) }}>
-          <Card.Cover
-            source={{uri: menu[activeCategoryId].items[0].image}}
-            className="h-[65%] border-b border-x border-gray-100"
-          />
-          <Card.Content className="mt-2">
-            <Text variant="bodyLarge">{menu[activeCategoryId].items[0].name}</Text>
-            <Text variant="bodyMedium" className="font-bold ml-auto">
-              R{menu[activeCategoryId].items[0].price}
-            </Text>
-          </Card.Content>
-        </Card>  */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -141,3 +135,16 @@ const HomeScreen = ({ route, navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({});
+
+const App = () => {
+  return (
+    <View className="flex flex-row flex-wrap">
+      {cardData.map((card) => (
+        <Flex key={card.id} className="w-1/2 p-2">
+          <View style={{ backgroundColor: card.color, height: 100 }} />
+        </Flex>
+      ))}
+    </View>
+  );
+};
+

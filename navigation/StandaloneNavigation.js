@@ -1,13 +1,27 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
 import MenuItemDetailScreen from '../screens/MenuItemDetailScreen'
 import BottomNavigationLocal from './BottomNavigationLocal'
+import CartHeaderIcon from '../components/CartHeaderIcon'
+import { CartContext } from '../contexts/CartContext'
 
 const MainNavigation = () => {
     const Stack = createNativeStackNavigator();
+    const {cart, setCart} = useContext(CartContext)
+    const [cartCounter, setCartCounter] = useState(0);
+    const totalQuantity = cart.reduce((total, currentItem) => {
+        return total + currentItem.quantity;
+    }, 0);
+
+    useEffect(() => {
+        // const totalQuantity = cart.reduce((total, currentItem) => {
+        //     return total + currentItem.quantity;
+        // }, 0);
+        // setCartCounter(totalQuantity);
+    }, [cart]);
 
     const navTheme = {
         ...DefaultTheme,
@@ -26,6 +40,7 @@ const MainNavigation = () => {
                     headerTitleStyle: {
                         fontWeight: 'bold',
                     },
+                    headerRight: () => <CartHeaderIcon totalQuantity={totalQuantity}/>,
                 }} />
             </Stack.Navigator>
         </NavigationContainer>
@@ -37,3 +52,4 @@ export default MainNavigation
 // headerStyle: {
 //     backgroundColor: '#f4511e',
 //   },
+

@@ -11,10 +11,25 @@ import { AntDesign } from "@expo/vector-icons";
 import { styled } from "nativewind";
 
 const StyledView = styled(View);
-const StyledText = styled(Text);
 
-function CartItemCard({ item }) {
-  console.log("item", item);
+function CartItemCard({ item, index, cart, setCart }) {
+
+  const increment = () => {
+    const updatedCart = [...cart];
+    updatedCart[index].quantity++;
+    setCart(updatedCart);
+  };
+  const decrement = () => {
+    const updatedCart = [...cart];
+    if(updatedCart[index].quantity == 1) {
+      updatedCart.splice(index, 1);
+      setCart(updatedCart);
+      return
+    }
+    updatedCart[index].quantity--;
+    setCart(updatedCart);
+  };
+  
   return (
     <StyledView
       className="w-full h-32 flex-row rounded-lg p-3 gap-1 mb-3 mx-auto"
@@ -46,7 +61,7 @@ function CartItemCard({ item }) {
             style={{ backgroundColor: "#D1D1D1" }}
           >
             <View className="flex-1 justify-between items-center">
-              <TouchableOpacity>
+              <TouchableOpacity onPress={decrement}>
                 <AntDesign
                   name={item?.quantity > 1 ? "minus" : "delete"}
                   size={20}
@@ -60,7 +75,7 @@ function CartItemCard({ item }) {
               </Text>
             </View>
             <View className="flex-1 justify-between items-center ">
-              <TouchableOpacity>
+              <TouchableOpacity onPress={increment}>
                 <AntDesign name="plus" size={24} color="#DD5A44" />
               </TouchableOpacity>
             </View>

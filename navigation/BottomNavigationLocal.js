@@ -1,16 +1,29 @@
 import { View, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BottomNavigation, useTheme } from "react-native-paper";
 import HomeScreen from "../screens/HomeScreen";
 import CartScreen from "../screens/CartScreen";
 import SignInScreen from "../screens/SignInScreen";
 import UserProfile from "../screens/UserProfile";
+import { CartContext } from "../contexts/CartContext";
+
 
 const BottomNavigationLocal = ({ route, navigation }) => {
-  // console.log('route',route);
-  // console.log('navigation',navigation);
+    const {cart, setCart} = useContext(CartContext)
+    const [cartCounter, setCartCounter] = useState(0);
+
+    useEffect(() => {
+        const totalQuantity = cart.reduce((total, currentItem) => {
+            return total + currentItem.quantity;
+        }, 0);
+        const updatedRoutes = routes;
+        updatedRoutes[1].badge = totalQuantity;
+        setRoutes(updatedRoutes)
+        setCartCounter(totalQuantity);
+    }, [cart]);
+
   const [index, setIndex] = useState(0);
-  const [routes] = useState([
+  const [routes, setRoutes] = useState([
     {
       key: "home",
       title: "Home",
@@ -22,6 +35,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
       title: "Cart",
       focusedIcon: "cart",
       unfocusedIcon: "cart-outline",
+      badge: cartCounter
     },
     {
       key: "favorites",
@@ -41,7 +55,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
   theme.colors.secondaryContainer = "transparent";
 
   const renderScene = BottomNavigation.SceneMap({
-    home: () => <HomeScreen navigation={navigation} />,
+    home: () => <HomeScreen navigation={navigation}  />,
     cart: CartScreen,
     favorites: SignInScreen,
     profile: UserProfile,

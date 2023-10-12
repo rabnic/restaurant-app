@@ -9,7 +9,7 @@ import {
 const RefreshmentCard = ({ refreshment, navigation, menuItemId }) => {
   // console.log('----', menuItemId);
   return (
-    <Card className="w-[95%] flex-1 bg-white m-1" style={{ height: hp(20) }}>
+    <Card className="bg-white mx-auto my-2" style={{ height: hp(20), width:hp(21.5)}}>
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("MenuItemDetail", { refreshment, refreshment })

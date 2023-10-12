@@ -29,7 +29,7 @@ const CategoryList = ({ setActiveCategoryId }) => {
 
 
 
-    const handleSelectCategory = (id,category) => {
+    const handleSelectCategory = (id, category) => {
         setSelectedCategory(category);
         setActiveCategoryId(id);
     }
@@ -41,6 +41,8 @@ const CategoryList = ({ setActiveCategoryId }) => {
             data={categories}
             renderItem={({ item }) => (
                 <TouchableOpacity
+                    key={item.name}
+
                     onPress={() => handleSelectCategory(item.categoryId, item.category)}
                 >
                     <CategoryCard
