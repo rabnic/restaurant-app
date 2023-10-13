@@ -10,6 +10,7 @@ import MenuItemDetailScreen from "./screens/MenuItemDetailScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 
 import { PaperProvider } from "react-native-paper";
+import { StripeProvider } from '@stripe/stripe-react-native';
 import { useState } from "react";
 
 import BottomNavigationLocal from "./navigation/BottomNavigationLocal";
@@ -25,12 +26,18 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <CartProvider>
-      <PaperProvider style={styles.container}>
-        <StatusBar style="auto" />
-        <MainNavigation />
-      </PaperProvider>
-    </CartProvider>
+    <StripeProvider
+      publishableKey={'publishableKey'}
+      merchantIdentifier="merchant.identifier" // required for Apple Pay
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+    >
+      <CartProvider>
+        <PaperProvider style={styles.container}>
+          <StatusBar style="auto" />
+          <MainNavigation />
+        </PaperProvider>
+      </CartProvider>
+    </StripeProvider>
   );
 }
 

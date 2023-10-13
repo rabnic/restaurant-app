@@ -6,6 +6,7 @@ import CartScreen from "../screens/CartScreen";
 import SignInScreen from "../screens/SignInScreen";
 import UserProfile from "../screens/UserProfile";
 import { CartContext } from "../contexts/CartContext";
+import PaymentScreen from "../screens/PaymentScreen";
 
 
 const BottomNavigationLocal = ({ route, navigation }) => {
@@ -57,7 +58,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
   const renderScene = BottomNavigation.SceneMap({
     home: () => <HomeScreen navigation={navigation}  />,
     cart: CartScreen,
-    favorites: SignInScreen,
+    favorites: PaymentScreen,
     profile: UserProfile,
   });
   return (
