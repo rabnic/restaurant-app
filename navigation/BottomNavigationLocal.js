@@ -8,45 +8,49 @@ import UserProfile from "../screens/UserProfile";
 import { CartContext } from "../contexts/CartContext";
 import PaymentScreen from "../screens/PaymentScreen";
 
-
 const BottomNavigationLocal = ({ route, navigation }) => {
-    const {cart, setCart} = useContext(CartContext)
-    const [cartCounter, setCartCounter] = useState(0);
+  const { cart, setCart } = useContext(CartContext);
+  const [cartCounter, setCartCounter] = useState(0);
 
-    useEffect(() => {
-        const totalQuantity = cart.reduce((total, currentItem) => {
-            return total + currentItem.quantity;
-        }, 0);
-        const updatedRoutes = routes;
-        updatedRoutes[1].badge = totalQuantity;
-        setRoutes(updatedRoutes)
-        setCartCounter(totalQuantity);
-    }, [cart]);
+  useEffect(() => {
+    const totalQuantity = cart.reduce((total, currentItem) => {
+      return total + currentItem.quantity;
+    }, 0);
+    // Update cart icon item counter
+    const updatedRoutes = routes;
+    updatedRoutes[1].badge = totalQuantity;
+    setRoutes(updatedRoutes);
+    setCartCounter(totalQuantity);
+  }, [cart]);
 
   const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([
     {
       key: "home",
       title: "Home",
+      screen: "Home",
       focusedIcon: "home",
       unfocusedIcon: "home-outline",
     },
     {
       key: "cart",
       title: "Cart",
+      screen: "Cart",
       focusedIcon: "cart",
       unfocusedIcon: "cart-outline",
-      badge: cartCounter
+      badge: cartCounter,
     },
     {
       key: "favorites",
       title: "Favorites",
+      screen: "Favorites",
       focusedIcon: "heart",
       unfocusedIcon: "heart-outline",
     },
     {
       key: "profile",
       title: "Profile",
+      screen: "Profile",
       focusedIcon: "account",
       unfocusedIcon: "account-outline",
     },
@@ -56,7 +60,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
   theme.colors.secondaryContainer = "transparent";
 
   const renderScene = BottomNavigation.SceneMap({
-    home: () => <HomeScreen navigation={navigation}  />,
+    home: () => <HomeScreen navigation={navigation} route={route} />,
     cart: CartScreen,
     favorites: PaymentScreen,
     profile: UserProfile,

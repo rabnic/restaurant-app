@@ -1,13 +1,11 @@
 import {
   StyleSheet,
   View,
-  Image,
   SafeAreaView,
-  FlatList,
-  TouchableOpacity,
   ScrollView,
+  Image,
 } from "react-native";
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Avatar,
@@ -21,47 +19,22 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Carousel from "react-native-snap-carousel";
-import PromotionCard from "../components/cards/PromotionCard";
-import { mainPromos, menu } from "../database/dummyData";
+import { menu } from "../database/dummyData";
 import CategoryList from "../components/CategoryList";
 import RefreshmentCard from "../components/cards/RefreshmentCard";
 import { CartContext } from "../contexts/CartContext";
+import PromotionsCarousel from "../components/PromotionsCarousel";
 const HomeScreen = ({ route, navigation }) => {
   const { cart } = useContext(CartContext);
-  // console.log("cart home--", cart);
-  const [activeIndex, setActiveIndex] = useState(1);
+  // console.log("route home--", route);
+
   const [activeCategoryId, setActiveCategoryId] = useState();
 
-  const carouselRef = useRef(null);
-
-  const renderItem = ({ item, index }) => (
-    <Card className="w-[100%] bg-slate-600 self-center relative">
-      <Card.Cover source={{ uri: item.image }} />
-      <View
-        className="w-[100%] h-[100%] absolute flex-col items-center rounded-xl p-2"
-        style={{ backgroundColor: "rgba(0,0,0,.3)" }}
-      >
-        <Text
-          variant="headlineMedium"
-          className="text-white font-bold "
-          style={{ fontFamily: "Lobster-Regular" }}
-        >
-          {item.title}
-        </Text>
-        <Text variant="bodyLarge" className="text-gray-200 font-bold ">
-          {item.discount}% off
-        </Text>
-        <Text variant="bodyMedium" className="text-gray-300 font-bold mt-auto">
-          *{item.extraInfo}
-        </Text>
-      </View>
-    </Card>
-  );
-
-  const onSnapToItem = (index) => {
-    setActiveIndex(index);
-  };
+  useEffect(() => {
+    // if (route.params?.hasOwnProperty("fromScreen")) {
+    //   console.log("====", route.params.fromScreen);
+    // }
+  }, []);
 
   return (
     <SafeAreaView className="flex-1 pt-12 px-3 flex-col">
@@ -77,26 +50,29 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
       </View>
 
-      <ScrollView className="w-full flex-col">
-        <View className="mb-4">
-          <Searchbar
+      <ScrollView
+        className="w-full flex-col"
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="mb-4 flex-row justify-center">
+          <Image
+            source={require("../assets/logos/logo-orange.png")}
+            resizeMode="cover"
+            style={{
+              width: "100%",
+              height: 90,
+            }}
+          />
+          {/* <Searchbar
             placeholder="Search food"
             onChangeText={() => {}}
             value={""}
             className="bg-transparent border border-gray-300"
-          />
+          /> */}
         </View>
 
-        <View className="mb-4 flex-row w-[100%] max-w-[100%] justify-center items-center">
-          <Carousel
-            layout={"default"}
-            ref={carouselRef}
-            data={mainPromos}
-            sliderWidth={wp(75)}
-            itemWidth={wp(85)}
-            renderItem={renderItem}
-            onSnapToItem={onSnapToItem}
-          />
+        <View className="mb-4 w-full">
+          <PromotionsCarousel />
         </View>
 
         <View className="mb-4 flex-row w-[100%] justify-between h-auto">
@@ -104,28 +80,15 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
 
         <View className="flex-1 w-full flex-row flex-wrap">
-          {activeCategoryId && (
-            menu[activeCategoryId].items.map((item,index) => (
+          {activeCategoryId &&
+            menu[activeCategoryId].items.map((item, index) => (
               <RefreshmentCard
-                  refreshment={item}
-                  navigation={navigation}
-                  menuItemId={index}
-                />
-            ))
-            // <FlatList
-            //   numColumns={2}
-            //   showsVerticalScrollIndicator={false}
-            //   data={menu[activeCategoryId].items}
-            //   renderItem={({ item, index }) => (
-            //     <RefreshmentCard
-            //       refreshment={item}
-            //       navigation={navigation}
-            //       menuItemId={index}
-            //     />
-            //   )}
-            //   keyExtractor={(item) => item.name}
-            // />
-          )}
+                refreshment={item}
+                navigation={navigation}
+                menuItemId={index}
+                key={item.name}
+              />
+            ))}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -135,16 +98,3 @@ const HomeScreen = ({ route, navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({});
-
-const App = () => {
-  return (
-    <View className="flex flex-row flex-wrap">
-      {cardData.map((card) => (
-        <Flex key={card.id} className="w-1/2 p-2">
-          <View style={{ backgroundColor: card.color, height: 100 }} />
-        </Flex>
-      ))}
-    </View>
-  );
-};
-
