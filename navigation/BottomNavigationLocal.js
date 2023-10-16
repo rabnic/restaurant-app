@@ -7,10 +7,12 @@ import SignInScreen from "../screens/SignInScreen";
 import UserProfile from "../screens/UserProfile";
 import { CartContext } from "../contexts/CartContext";
 import PaymentScreen from "../screens/PaymentScreen";
+import FavoritesScreen from "../screens/FavoritesScreen";
 
 const BottomNavigationLocal = ({ route, navigation }) => {
   const { cart, setCart } = useContext(CartContext);
   const [cartCounter, setCartCounter] = useState(0);
+  console.log('route', route.params);
 
   useEffect(() => {
     const totalQuantity = cart.reduce((total, currentItem) => {
@@ -24,6 +26,12 @@ const BottomNavigationLocal = ({ route, navigation }) => {
   }, [cart]);
 
   const [index, setIndex] = useState(0);
+useEffect(()=> {
+  if(route.params.hasOwnProperty('index')) {
+    console.log('inside params index');
+    setIndex(route.params.index);
+  }
+}, [route.params])
   const [routes, setRoutes] = useState([
     {
       key: "home",
@@ -62,7 +70,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
   const renderScene = BottomNavigation.SceneMap({
     home: () => <HomeScreen navigation={navigation} route={route} />,
     cart: CartScreen,
-    favorites: PaymentScreen,
+    favorites: () => <FavoritesScreen navigation={navigation} route={route} />,
     profile: UserProfile,
   });
   return (

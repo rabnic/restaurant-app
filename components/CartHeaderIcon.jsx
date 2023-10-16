@@ -9,7 +9,7 @@ const CartHeaderIcon = ({ totalQuantity, navigation }) => {
     <View style={{ width: 28, marginRight: 6 }}>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("BottomNavigation", { screen: "Cart" })
+          navigation.navigate("BottomNavigation", { key: "cart", index: 1 })
         }
       >
         <MaterialCommunityIcons

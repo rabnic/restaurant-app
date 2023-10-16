@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
-
+import { removeAsyncStorageItem, setAsyncStorageItem } from "../utils/asyncStorage";
 const firebaseConfig = {
     apiKey: "AIzaSyARKJtVcNsaBY-OEtZkbnqOxTHL3kXGwhc",
     authDomain: "restaurant-app-5c17d.firebaseapp.com",
@@ -38,7 +38,7 @@ export const refreshToken = async (refreshToken) => {
     });
 
 }
-
+ 
 export const validateToken = async () => {
   console.log("Trying to validate");
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebaseConfig.apiKey}`;
@@ -107,7 +107,8 @@ export const signUpWithEmailAndPassword = async (email, password) => {
         signUpResponseStatus = { status: 'failure', message: response.error.message };
       } else {
         signUpResponseStatus = { status: 'success', email: response.email }
-        await SecureStore.setItemAsync("authToken", JSON.stringify(response));
+        // await SecureStore.setItemAsync("authToken", JSON.stringify(response));
+        await setAsyncStorageItem("authToken", response)
       }
       console.log("signup successful");
     })
@@ -146,7 +147,8 @@ export const signInUserWithEmailAndPassword = async (email, password) => {
       } else {
         signInResponseStatus = { status: 'success', email: response.email }
         await SecureStore.setItemAsync("authToken", JSON.stringify(response));
-      }
+        await setAsyncStorageItem("authToken",response);
+        }
       console.log("after securestore", email);
     })
     .catch((error) => {
@@ -157,7 +159,7 @@ export const signInUserWithEmailAndPassword = async (email, password) => {
 };
 
 export const signOutUser = async () => {
-  await SecureStore.deleteItemAsync("authToken")
+  await removeAsyncStorageItem("authToken")
     .then(() => {
       console.log("Sign-out successful.");
     })
@@ -173,6 +175,7 @@ export const registerUser = async (user) => {
     fields: {
       fullName: { stringValue: user.fullName },
       email: { stringValue: user.email },
+      phoneNumber: { stringValue: user.phoneNumber },
     },
   };
   fetch(url, {

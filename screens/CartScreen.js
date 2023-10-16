@@ -25,23 +25,26 @@ import { CartContext } from "../contexts/CartContext";
 import { menu } from "../database/dummyData";
 
 const CartScreen = (props) => {
-  console.log("props", props.jumpTo);
+  console.log("props", props);
   const animation = useRef(null);
   const { cart, setCart } = useContext(CartContext);
   console.log("cart screen====================--", cart);
   const [value, setValue] = useState("");
 
-  const getCartTotal = () => {};
+  const getCartTotal = () => { };
 
   return (
     <SafeAreaView className="pt-12 px-2 flex-1 relative bg-white">
       <ScrollView
         className="flex-1 flex-col"
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={{ flex: 1 }}
+      // contentContainerStyle={{ flex: 1 }}
       >
         <View className="w-full justify-center flex-row p-3 mb-2">
-          <Text variant="headlineMedium" className="font-extrabold">
+          <Text
+            className="my-1 p-1 tracking-widest"
+            style={{ fontFamily: "Lobster-Regular", fontSize: 40 }}
+          >
             Cart
           </Text>
         </View>
@@ -58,7 +61,7 @@ const CartScreen = (props) => {
               );
             })}
             <Divider className="my-3" />
-            <View className="my-3">
+            {/* <View className="my-3">
               <Text variant="bodyLarge" className="font-bold text-gray-700">
                 Add Sides:
               </Text>
@@ -72,12 +75,12 @@ const CartScreen = (props) => {
                       <Avatar.Image source={{ uri: item.image }} size={40} />
                     )}
                     right={(props) => (
-                      <Checkbox status={"checked"} onPress={() => {}} />
+                      <Checkbox status={"checked"} onPress={() => { }} />
                     )}
                   />
                 );
               })}
-            </View>
+            </View> */}
             <Text variant="bodyLarge" className="font-bold">
               Special instruction:
             </Text>
@@ -94,7 +97,7 @@ const CartScreen = (props) => {
               placeholder="Example: Extra mayo sauce..."
               numberOfLines={4}
               //   value={"Description"}
-              onChangeText={(Description) => {}}
+              onChangeText={(Description) => { }}
             />
             {/* <SegmentedButtons
             className="mt-4"
@@ -134,7 +137,7 @@ const CartScreen = (props) => {
                   Total:
                 </Text>
                 <Text variant="bodyMedium" className="font-bold">
-                  R140.00
+                  {getCartTotal()}
                 </Text>
               </View>
             </View>
@@ -158,7 +161,7 @@ const CartScreen = (props) => {
               ref={animation}
               style={{ width: "95%", height: "auto" }}
             />
-            <Text variant="headlineMedium" className="font-bold">
+            <Text variant="headlineSmall" className="font-bold">
               Cart is empty
             </Text>
             <Button

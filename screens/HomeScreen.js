@@ -9,11 +9,7 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Avatar,
-  Searchbar,
-  Card,
   Text,
-  BottomNavigation,
-  Button,
 } from "react-native-paper";
 import {
   widthPercentageToDP as wp,
@@ -23,9 +19,12 @@ import { menu } from "../database/dummyData";
 import CategoryList from "../components/CategoryList";
 import RefreshmentCard from "../components/cards/RefreshmentCard";
 import { CartContext } from "../contexts/CartContext";
+import { UserContext } from "../contexts/UserContext";
 import PromotionsCarousel from "../components/PromotionsCarousel";
+import { getTimeOfDay } from "../utils/misc";
 const HomeScreen = ({ route, navigation }) => {
   const { cart } = useContext(CartContext);
+  const { user } = useContext(UserContext);
   // console.log("route home--", route);
 
   const [activeCategoryId, setActiveCategoryId] = useState();
@@ -45,8 +44,8 @@ const HomeScreen = ({ route, navigation }) => {
           size={40}
         />
         <View className="ml-3">
-          <Text>Good afternoon</Text>
-          <Text className="font-bold">Nicholas</Text>
+          <Text>Good {getTimeOfDay()}</Text>
+          <Text className="font-bold">{user === null ? 'Customer': user.fullName}</Text>
         </View>
       </View>
 

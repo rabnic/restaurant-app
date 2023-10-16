@@ -4,6 +4,8 @@ import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import MenuItemDetailScreen from "../screens/MenuItemDetailScreen";
+import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 import BottomNavigationLocal from "./BottomNavigationLocal";
 import CartHeaderIcon from "../components/CartHeaderIcon";
 import { CartContext } from "../contexts/CartContext";
@@ -61,6 +63,30 @@ const MainNavigation = () => {
                 navigation={navigation}
               />
             ),
+          })}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+            headerTransparent: true,
+            title: "",
+            headerTintColor: "#777",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={({ navigation }) => ({
+            headerTransparent: true,
+            title: "",
+            headerTintColor: "#777",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
           })}
         />
       </Stack.Navigator>

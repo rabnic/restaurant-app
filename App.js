@@ -11,6 +11,8 @@ import SignUpScreen from "./screens/SignUpScreen";
 
 import { PaperProvider } from "react-native-paper";
 import { StripeProvider } from "@stripe/stripe-react-native";
+import { AuthProvider } from "./contexts/AuthContext";
+import { UserProvider } from "./contexts/UserContext";
 import { useState } from "react";
 import FlashMessage from "react-native-flash-message";
 import BottomNavigationLocal from "./navigation/BottomNavigationLocal";
@@ -31,14 +33,18 @@ export default function App() {
       merchantIdentifier="merchant.identifier" // required for Apple Pay
       urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
     >
-      <CartProvider>
-        <PaperProvider style={styles.container}>
-          <StatusBar style="auto" />
-          <MainNavigation />
-          {/* <OnboardingScreen /> */}
-          <FlashMessage position="bottom" />
-        </PaperProvider>
-      </CartProvider>
+      <UserProvider>
+        <AuthProvider>
+          <CartProvider>
+            <PaperProvider style={styles.container}>
+              <StatusBar style="auto" />
+              <MainNavigation />
+              {/* <OnboardingScreen /> */}
+              <FlashMessage position="bottom" />
+            </PaperProvider>
+          </CartProvider>
+        </AuthProvider>
+      </UserProvider>
     </StripeProvider>
   );
 }
