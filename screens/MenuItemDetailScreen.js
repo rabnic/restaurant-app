@@ -101,13 +101,19 @@ const MenuItemDetailScreen = ({ route }) => {
         resizeMode="cover"
       >
         <View
-          className="w-full h-full border absolute flex-col justify-end rounded-2xl pl-3 pr-5 pb-5"
+          className="w-full h-full absolute flex-col justify-end pl-3 pr-5 pb-5"
           style={{ backgroundColor: "rgba(0,0,0,.3)" }}
         >
           <View className="h-fit flex-row justify-between">
-            <Text variant="headlineLarge" className="text-white font-bold">
+            {/* <Text variant="headlineLarge" className="text-white font-bold">
               {refreshment.name}
-            </Text>
+            </Text> */}
+            <Text
+            className="tracking-widest text-white"
+            style={{ fontFamily: "Lobster-Regular", fontSize: 40 }}
+          >
+            {refreshment.name}
+          </Text>
             <MaterialCommunityIcons
               name={isLiked ? "cards-heart" : "cards-heart-outline"}
               size={32}

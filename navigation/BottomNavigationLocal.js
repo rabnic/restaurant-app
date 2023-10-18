@@ -27,7 +27,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
 
   const [index, setIndex] = useState(0);
 useEffect(()=> {
-  if(route.params.hasOwnProperty('index')) {
+  if(route.params?.hasOwnProperty('index')) {
     console.log('inside params index');
     setIndex(route.params.index);
   }
@@ -69,9 +69,9 @@ useEffect(()=> {
 
   const renderScene = BottomNavigation.SceneMap({
     home: () => <HomeScreen navigation={navigation} route={route} />,
-    cart: CartScreen,
+    cart: () => <CartScreen navigation={navigation} route={route} />,
     favorites: () => <FavoritesScreen navigation={navigation} route={route} />,
-    profile: UserProfile,
+    profile:() => <UserProfile navigation={navigation}/>,
   });
   return (
     <BottomNavigation

@@ -15,8 +15,8 @@ import { registerUser, signUpWithEmailAndPassword } from "../services/firebase";
 
 
 const SignUpScreen = ({ navigation }) => {
-const {user, setUser} = useContext(UserContext);
-const {authUser, setAuthUser} = useContext(AuthContext);
+// const {user, setUser} = useContext(UserContext);
+const {authUser, updateAuthUser} = useContext(AuthContext);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,7 +49,7 @@ const {authUser, setAuthUser} = useContext(AuthContext);
             phone: phoneNumber
           }).then(() => {
             console.log("Registered yahaaaaaa");
-            setUser({ email, fullName, phoneNumber });
+            updateAuthUser({ email, fullName, phoneNumber });
           });
           // setIsLoading(false);
         } else {
@@ -63,9 +63,7 @@ const {authUser, setAuthUser} = useContext(AuthContext);
 
   return (
     <SafeAreaView
-      className="flex-1 bg-[#F4E1D5] flex-col"
-
-    >
+      className="flex-1 bg-[#F4E1D5] flex-col">
       <View className="flex-1 justify-center items-center" style={{ minHeight: hp(35) }}>
         <Image
           resizeMode="cover"

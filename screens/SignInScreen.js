@@ -20,29 +20,11 @@ import { AuthContext } from "../contexts/AuthContext";
 import { signInUserWithEmailAndPassword } from "../services/firebase";
 import { showMessage } from "react-native-flash-message";
 
-// SplashScreen.preventAutoHideAsync();
-
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({navigation, route}) => {
   const { authUser, updateAuthUser } = useContext(AuthContext)
-  // const [fontsLoaded, setFontsLoaded] = useState(false);
-  // const [fontsLoaded, fontError] = useFonts({
-  //   Lobster_400Regular,
-  // });
-  // const [fontsLoaded, fontError] = useFonts({
-  //   "Lobster-Regular": require("../assets/fonts/Lobster-Regular.ttf"),
-  //   GoodDogNew: require("../assets/fonts/GoodDogNew.ttf"),
-  // });
-
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded || fontError) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded, fontError]);
-
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
+ 
   console.log('navigation',navigation);
+  console.log('route',route);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,7 +51,7 @@ const SignInScreen = ({ navigation }) => {
       .then((response) => {
         console.log("signed in---", response);
         if (response.status === "success") {
-          updateAuthUser({ email: response.email, fullName: "No Name" })
+          updateAuthUser({ email: response.email, fullName: "Nicholas Rabalao" })
           setIsLoading(false);
           showMessage({
             message: "Successfully signed in!",
@@ -127,6 +109,8 @@ const SignInScreen = ({ navigation }) => {
             label="Password"
             placeholder="*******"
             style={{ backgroundColor: "whitesmoke" }}
+            autoCorrect={false}
+            secureTextEntry
           />
           <Text className="mt-4 self-center text-[#DD5A44]" variant="bodyLarge">
             Forgot your password?

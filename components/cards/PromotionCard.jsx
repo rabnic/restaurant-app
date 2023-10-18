@@ -11,13 +11,12 @@ const PromotionCard = ({ image, title, discount, extraInfo }) => {
         style={{ backgroundColor: "rgba(0,0,0,.3)" }}
       >
         <Text
-          variant="headlineMedium"
-          className="text-white font-bold "
-          style={{ fontFamily: "Lobster-Regular" }}
-        >
-          {title}
-        </Text>
-        <Text variant="bodyLarge" className="text-gray-200 font-bold ">
+            className="tracking-widest text-white"
+            style={{ fontFamily: "Lobster-Regular", fontSize: 32 }}
+          >
+            {title}
+          </Text>
+        <Text className=" text-gray-300" style={{ fontFamily: "GoodDogNew", fontSize: 20 }}>
           {discount}% off
         </Text>
         <Text variant="bodyMedium" className="text-gray-300 font-bold mt-auto">

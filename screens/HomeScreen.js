@@ -39,13 +39,22 @@ const HomeScreen = ({ route, navigation }) => {
     <SafeAreaView className="flex-1 pt-12 px-3 flex-col">
       <StatusBar style="auto" />
       <View className="py-2 flex-row items-center">
-        <Avatar.Image
-          source={require("../assets/user-profile.jpg")}
-          size={40}
-        />
+      {
+          user ?
+            (
+              <Avatar.Image
+                source={require("../assets/user-profile.jpg")}
+                size={40}
+              />
+            )
+            :
+            (
+              <Avatar.Text size={50} label={user ? 'ND' : 'DC'} />
+            )
+        }
         <View className="ml-3">
           <Text>Good {getTimeOfDay()}</Text>
-          <Text className="font-bold">{user === null ? 'Customer': user.fullName}</Text>
+          <Text className="font-bold">{user === null ? 'Dearest Customer': user.fullName}</Text>
         </View>
       </View>
 

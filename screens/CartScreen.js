@@ -7,7 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from "react-native";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Button,
   Text,
@@ -28,10 +28,22 @@ const CartScreen = (props) => {
   console.log("props", props);
   const animation = useRef(null);
   const { cart, setCart } = useContext(CartContext);
+ 
+  const [cartTotal, setCartTotal] = useState(0)
   console.log("cart screen====================--", cart);
   const [value, setValue] = useState("");
-
-  const getCartTotal = () => { };
+  
+  useEffect(() => {
+    const getCartTotal = () => {
+   
+      const runningTotal = cart.reduce((acc, obj) => {
+        const total = obj.quantity * obj.price;
+        return acc + total;
+      }, 0);
+      setCartTotal(runningTotal.toFixed(2));
+     };
+     getCartTotal();
+  }, [cart])
 
   return (
     <SafeAreaView className="pt-12 px-2 flex-1 relative bg-white">
@@ -57,6 +69,7 @@ const CartScreen = (props) => {
                   index={index}
                   cart={cart}
                   setCart={setCart}
+                  key={item.name}
                 />
               );
             })}
@@ -120,7 +133,7 @@ const CartScreen = (props) => {
                   Subtotal:
                 </Text>
                 <Text variant="bodyMedium" className="font-semibold">
-                  R115.00
+                  R{cartTotal}
                 </Text>
               </View>
               <View className="flex-row justify-between my-2">
@@ -137,7 +150,7 @@ const CartScreen = (props) => {
                   Total:
                 </Text>
                 <Text variant="bodyMedium" className="font-bold">
-                  {getCartTotal()}
+                  {cartTotal}
                 </Text>
               </View>
             </View>
@@ -146,7 +159,7 @@ const CartScreen = (props) => {
               mode="contained"
               buttonColor="#DD5A44"
               uppercase={true}
-              onPress={() => console.log("Pressed")}
+              onPress={() => console.log("pressed")}
               contentStyle={{ marginHorizontal: 4, height: 50 }}
             >
               Checkout

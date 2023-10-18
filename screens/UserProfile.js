@@ -10,7 +10,7 @@ import { UserContext } from "../contexts/UserContext";
 import { showMessage } from "react-native-flash-message";
 import { signOutUser } from "../services/firebase";
 
-const UserProfile = () => {
+const UserProfile = ({navigation}) => {
   const { updateAuthUser } = useContext(AuthContext);
   const { user, setUser } = useContext(UserContext);
   const [visible, setVisible] = React.useState(false);
@@ -61,6 +61,8 @@ const UserProfile = () => {
         rippleColor="#FCF3F1"
         className="rounded-lg"
         onPress={showModal}
+        disabled={user === null}
+        
       >
         My Profile
       </Button>
@@ -71,6 +73,7 @@ const UserProfile = () => {
         textColor="#404040"
         className="rounded-lg border-gray-500"
         onPress={() => console.log("Pressed")}
+        disabled={user === null}
       >
         Change Password
       </Button>
@@ -81,6 +84,7 @@ const UserProfile = () => {
         textColor="#404040"
         className="rounded-lg border-gray-500"
         onPress={() => console.log("Pressed")}
+        disabled={user === null}
       >
         My Orders
       </Button>
@@ -91,6 +95,7 @@ const UserProfile = () => {
         textColor="#404040"
         className="rounded-lg border-gray-500"
         onPress={() => console.log("Pressed")}
+        disabled={user === null}
       >
         Delivery Addresses
       </Button>
@@ -101,6 +106,7 @@ const UserProfile = () => {
         textColor="#404040"
         className="rounded-lg border-gray-500"
         onPress={() => console.log("Pressed")}
+        disabled={user === null}
       >
         Payment Methods
       </Button>
@@ -111,6 +117,7 @@ const UserProfile = () => {
         textColor="#404040"
         className="rounded-lg border-gray-500"
         onPress={() => console.log("Pressed")}
+        disabled={user === null}
       >
         Favorites
       </Button>
@@ -121,6 +128,7 @@ const UserProfile = () => {
         textColor="#404040"
         className="rounded-lg border-gray-500"
         onPress={() => console.log("Pressed")}
+        disabled={user === null}
       >
         Delete Account
       </Button>
@@ -148,7 +156,7 @@ const UserProfile = () => {
               style={{ width: 200, alignSelf: "center", marginTop: 50 }}
               textColor="#FFFFFF"
               buttonColor="#DD5A44"
-              onPress={()=> {}}
+              onPress={()=> navigation.navigate("SignIn")}
             >
               Go to Sign In
             </Button>
