@@ -99,7 +99,7 @@ const UserProfile = ({navigation}) => {
       >
         Delivery Addresses
       </Button>
-      <Button
+      {/* <Button
         icon="wallet-outline"
         mode="outlined"
         contentStyle={{ justifyContent: "flex-start", height: 50 }}
@@ -109,7 +109,7 @@ const UserProfile = ({navigation}) => {
         disabled={user === null}
       >
         Payment Methods
-      </Button>
+      </Button> */}
       <Button
         icon="heart-outline"
         mode="outlined"

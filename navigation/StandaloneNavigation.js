@@ -9,6 +9,7 @@ import SignUpScreen from "../screens/SignUpScreen";
 import BottomNavigationLocal from "./BottomNavigationLocal";
 import CartHeaderIcon from "../components/CartHeaderIcon";
 import { CartContext } from "../contexts/CartContext";
+import CheckoutScreen from "../screens/CheckoutScreen";
 
 const MainNavigation = () => {
   const Stack = createNativeStackNavigator();
@@ -63,6 +64,18 @@ const MainNavigation = () => {
                 navigation={navigation}
               />
             ),
+          })}
+        />
+        <Stack.Screen
+          name="Checkout"
+          component={CheckoutScreen}
+          options={() => ({
+            headerTransparent: true,
+            title: "",
+            headerTintColor: "#aaa",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
           })}
         />
         <Stack.Screen

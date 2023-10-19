@@ -2,10 +2,7 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  Image,
   ScrollView,
-  Platform,
-  KeyboardAvoidingView,
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
@@ -22,7 +19,7 @@ import LottieView from "lottie-react-native";
 import { AntDesign } from "@expo/vector-icons";
 import CartItemCard from "../components/cards/CartItemCard";
 import { CartContext } from "../contexts/CartContext";
-import { menu } from "../database/dummyData";
+import { Alert } from "react-native";
 
 const CartScreen = (props) => {
   console.log("props", props);
@@ -30,8 +27,10 @@ const CartScreen = (props) => {
   const { cart, setCart } = useContext(CartContext);
  
   const [cartTotal, setCartTotal] = useState(0)
-  console.log("cart screen====================--", cart);
+  // console.log("cart screen====================--", cart);
   const [value, setValue] = useState("");
+
+ 
   
   useEffect(() => {
     const getCartTotal = () => {
@@ -44,6 +43,7 @@ const CartScreen = (props) => {
      };
      getCartTotal();
   }, [cart])
+
 
   return (
     <SafeAreaView className="pt-12 px-2 flex-1 relative bg-white">
@@ -159,7 +159,7 @@ const CartScreen = (props) => {
               mode="contained"
               buttonColor="#DD5A44"
               uppercase={true}
-              onPress={() => console.log("pressed")}
+              onPress={() => props.navigation.navigate("Checkout")}
               contentStyle={{ marginHorizontal: 4, height: 50 }}
             >
               Checkout
