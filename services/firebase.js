@@ -175,15 +175,19 @@ export const registerUser = async (user) => {
     fields: {
       fullName: { stringValue: user.fullName },
       email: { stringValue: user.email },
-      phoneNumber: { stringValue: user.phoneNumber },
+      phone: { stringValue: user.phone },
     },
   };
+  console.log(firebaseDocumentStructure);
+
   fetch(url, {
     method: "POST",
     body: JSON.stringify(firebaseDocumentStructure),
+    headers: {
+      "content-type": "application/json",
+    },
   })
     .then((response) => {
-      console.log('response', response.json())
       return response.json()
     })
     .then(async (user) => {
@@ -210,6 +214,47 @@ export const getUser = async (userEmail) => {
     .catch((error) => console.log("Error getting user document: ", error));
 };
 
+export const saveCustomerOrder = async (order) => {
+  console.log("order", order);
+  const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${ORDERS}`;
+  const arrayFirebaseStructre = order.items.map((obj) => {
+    const field = Object.getOwnPropertyNames(obj)[0 ];
+    return {[field]: {stringValue: obj[field]}}
+  })
+
+  console.log(arrayFirebaseStructre);
+return
+  const firebaseDocumentStructure = {
+    fields: {
+      customerName: { stringValue: order.customerName },
+      email: { stringValue: order.email },
+      phoneNumber: { stringValue: order.phoneNumber },
+      shipping: { stringValue: order.shipping },
+      specialInstruction: { stringValue: order.specialInstruction },
+      items: {arrayValue: arrayFirebaseStructre},
+      totalBill: { stringValue: order.totalBill },
+      createTime: { stringValue: order.createTime },
+      creationDate: { stringValue: order.creationDate },
+    },
+  };
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify(firebaseDocumentStructure),
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((response) => {
+      const responseData = response.json();
+      console.log('response', responseData)
+      return responseData;
+    })
+    .then(orderDoc => {
+      console.log('order created ', orderDoc);
+
+    })
+    .catch((err) => console.log("Failed to create order", err));
+};
 // export const getUserRecordings = async (userEmail) => {
 //   const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${USERS}/${userEmail}/${RECORDINGS}`;
 //   let recordingsData = [];

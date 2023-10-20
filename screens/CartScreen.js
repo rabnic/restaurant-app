@@ -155,7 +155,7 @@ const CartScreen = (props) => {
               </View>
             </View>
             <Button
-              style={{ marginTop: 55 }}
+              style={{ marginTop: 55, marginBottom: 20 }}
               mode="contained"
               buttonColor="#DD5A44"
               uppercase={true}

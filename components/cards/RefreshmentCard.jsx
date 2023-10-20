@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Card, Text } from "react-native-paper";
 import {
@@ -9,7 +10,7 @@ import {
 const RefreshmentCard = ({ refreshment, navigation, menuItemId }) => {
   // console.log('----', menuItemId);
   return (
-    <Card className="bg-white mx-auto my-2" style={{ height: hp(20), width:hp(21.5)}}>
+    <Card className="bg-white mx-auto my-2" style={{ height: hp(20), width: hp(21.5) }}>
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("MenuItemDetail", { refreshment, refreshment })
@@ -26,12 +27,14 @@ const RefreshmentCard = ({ refreshment, navigation, menuItemId }) => {
           onPress={() => navigation.navigate("MenuItemDetail")}
           className="h-[65%]"
         >
-          <Text variant="bodyLarge" className="font-bold">
-            {refreshment.name}
-          </Text>
-          <Text variant="bodyMedium" className="ml-auto">
-            R{refreshment.price}
-          </Text>
+          <View className="flex-col">
+            <Text variant="bodyLarge" className="font-bold">
+              {refreshment.name}
+            </Text>
+            <Text variant="bodyMedium" className="ml-auto">
+              R{refreshment.price}
+            </Text>
+          </View>
         </TouchableOpacity>
       </Card.Content>
     </Card>

@@ -1,7 +1,6 @@
 import {
   StyleSheet,
   View,
-  SafeAreaView,
   Image,
   ScrollView,
   Platform,
@@ -26,9 +25,11 @@ import { menu } from "../database/dummyData";
 import { Alert } from "react-native";
 
 import { usePaymentSheet } from "@stripe/stripe-react-native";
+import { saveCustomerOrder } from "../services/firebase";
+import { SafeAreaView } from "react-native";
 
 const CheckoutScreen = (props) => {
-  console.log("props", props);
+  // console.log("props", props);
   const animation = useRef(null);
   const { cart, setCart } = useContext(CartContext);
 
@@ -70,7 +71,7 @@ const CheckoutScreen = (props) => {
   const initialisePaymentSheet = async () => {
     // const {paymentIntent, ephemeralKey, customer} = await fetchPaymentSheetParams();
     const { paymentIntent } = await fetchPaymentSheetParams();
-    console.log('paymentIntent', paymentIntent);
+    // console.log('paymentIntent', paymentIntent);
     const { error } = await initPaymentSheet({
       paymentIntentClientSecret: paymentIntent,
       // customerId: customer,
@@ -118,14 +119,36 @@ const CheckoutScreen = (props) => {
   }, [cart])
 
   const buy = async () => {
-    console.log('first buy line', ready);
-    const { error } = await presentPaymentSheet();
-    console.log('await buy');
-    if (error) {
-      Alert.alert(`Error code:  ${error.code}`, error.message);
-    } else {
-      Alert.alert("Success", "The payment was confirmed successfully")
+    await saveCustomerOrder(createOrder())
+
+    // console.log('first buy line', ready);
+    // const { error } = await presentPaymentSheet();
+    // console.log('await buy');
+    // if (error) {
+    //   Alert.alert(`Error code:  ${error.code}`, error.message);
+    // } else {
+    //   await saveCustomerOrder(createOrder())
+    //   .then(
+
+    //     Alert.alert("Success", "The payment was confirmed successfully")
+    //   )
+    // }
+  }
+
+  const createOrder = () => {
+    const orderDateTime = new Date();
+    const order = {
+      customerName: "Nicholas Rabalao",
+      email: "rabalao@gmail.com",
+      phoneNumber:"0614556378",
+      shipping: "Pick Up",
+      items: cart,
+      specialInstruction: "No icecubes on this order",
+      totalBill: cartTotal,
+      createTime: orderDateTime.toLocaleTimeString(),
+      creationDate: orderDateTime.toLocaleDateString(),
     }
+    return order;
   }
 
   return (
@@ -239,8 +262,6 @@ const CheckoutScreen = (props) => {
                 </Text>
               </View>
             </View>
-
-
           </View>
         )}
       </ScrollView>
