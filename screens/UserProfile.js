@@ -10,7 +10,7 @@ import { UserContext } from "../contexts/UserContext";
 import { showMessage } from "react-native-flash-message";
 import { signOutUser } from "../services/firebase";
 
-const UserProfile = ({navigation}) => {
+const UserProfile = ({ navigation }) => {
   const { updateAuthUser } = useContext(AuthContext);
   const { user, setUser } = useContext(UserContext);
   const [visible, setVisible] = React.useState(false);
@@ -62,7 +62,7 @@ const UserProfile = ({navigation}) => {
         className="rounded-lg"
         onPress={showModal}
         disabled={user === null}
-        
+
       >
         My Profile
       </Button>
@@ -110,7 +110,7 @@ const UserProfile = ({navigation}) => {
       >
         Payment Methods
       </Button> */}
-      <Button
+      {/* <Button
         icon="heart-outline"
         mode="outlined"
         contentStyle={{ justifyContent: "flex-start", height: 50 }}
@@ -120,7 +120,7 @@ const UserProfile = ({navigation}) => {
         disabled={user === null}
       >
         Favorites
-      </Button>
+      </Button> */}
       <Button
         icon="delete-sweep-outline"
         mode="outlined"
@@ -156,7 +156,7 @@ const UserProfile = ({navigation}) => {
               style={{ width: 200, alignSelf: "center", marginTop: 50 }}
               textColor="#FFFFFF"
               buttonColor="#DD5A44"
-              onPress={()=> navigation.navigate("SignIn")}
+              onPress={() => navigation.navigate("SignIn")}
             >
               Go to Sign In
             </Button>

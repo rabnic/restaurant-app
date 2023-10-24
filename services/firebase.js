@@ -217,13 +217,30 @@ export const getUser = async (userEmail) => {
 export const saveCustomerOrder = async (order) => {
   console.log("order", order);
   const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${ORDERS}`;
-  const arrayFirebaseStructre = order.items.map((obj) => {
-    const field = Object.getOwnPropertyNames(obj)[0 ];
-    return {[field]: {stringValue: obj[field]}}
-  })
+  const arrayFirebaseStructure = order.items.map((obj) => (
+    {
+      "mapValue": {
+        "fields": {
+          "quantity": {
+            "stringValue": obj.quantity.toString(),
+          },
+          "price": {
+            "stringValue": obj.price.toString(),
+          },
+          "name": {
+            "stringValue": obj.name,
+          },
+          "id": {
+            "stringValue": "id101_test"
+          }
+        }
+      }
+    }
+  )
+  )
 
-  console.log(arrayFirebaseStructre);
-return
+  console.log(arrayFirebaseStructure);
+
   const firebaseDocumentStructure = {
     fields: {
       customerName: { stringValue: order.customerName },
@@ -231,7 +248,11 @@ return
       phoneNumber: { stringValue: order.phoneNumber },
       shipping: { stringValue: order.shipping },
       specialInstruction: { stringValue: order.specialInstruction },
-      items: {arrayValue: arrayFirebaseStructre},
+      items: {
+        arrayValue: {
+          values: arrayFirebaseStructure
+        }
+      },
       totalBill: { stringValue: order.totalBill },
       createTime: { stringValue: order.createTime },
       creationDate: { stringValue: order.creationDate },
@@ -255,6 +276,80 @@ return
     })
     .catch((err) => console.log("Failed to create order", err));
 };
+
+const orders = {
+  "documents": [
+    {
+      "name": "projects/restaurant-app-5c17d/databases/(default)/documents/orders/4SL9AIFfpw9ChyHc0pQ4",
+      "fields": {
+        "shipping": {
+          "stringValue": "Pick Up"
+        },
+        "customerName": {
+          "stringValue": "Nicholas Rabalao"
+        },
+        "specialInstruction": {
+          "stringValue": "No icecubes on this order"
+        },
+        "createTime": {
+          "stringValue": "12:41:42 PM"
+        },
+        "totalBill": {
+          "stringValue": "247.93"
+        },
+        "creationDate": {
+          "stringValue": "10/20/2023"
+        },
+        "items": {
+          "arrayValue": {
+            "values": [
+              {
+                "mapValue": {
+                  "fields": {
+                    "quantity": {
+                      "stringValue": "3"
+                    },
+                    "price": {
+                      "stringValue": "22.5"
+                    },
+                    "name": {
+                      "stringValue": "burger"
+                    },
+                    "id": {
+                      "stringValue": "101"
+                    }
+                  }
+                }
+              },
+              {
+                "mapValue": {
+                  "fields": {
+                    "quantity": {
+                      "stringValue": "1"
+                    },
+                    "name": {
+                      "stringValue": "pizza"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "phoneNumber": {
+          "stringValue": "0614556378"
+        },
+        "email": {
+          "stringValue": "rabalao@gmail.com"
+        }
+      },
+      "createTime": "2023-10-20T10:41:44.395402Z",
+      "updateTime": "2023-10-21T15:18:54.302742Z"
+    }
+  ]
+}
+
+
 // export const getUserRecordings = async (userEmail) => {
 //   const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${USERS}/${userEmail}/${RECORDINGS}`;
 //   let recordingsData = [];

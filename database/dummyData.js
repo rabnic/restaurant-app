@@ -1,8 +1,13 @@
+export const shippingFee = {
+    delivery: 65.00,
+    pickup: 0
+}
+
 export const menu = {
-    "category4":{
+    "category4": {
         "category": "Burgers",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/burgers%2Fmexicano.jpg?alt=media&token=929ed8e8-2366-46c0-a878-38e89f887fd2&_gl=1*1h5pfaq*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA2NzQ5LjYwLjAuMA..",
-        
+
         "items": [
             {
                 "name": "Back to Basics",
@@ -42,10 +47,10 @@ export const menu = {
             }
         ]
     },
-    "category5":{
+    "category5": {
         "category": "Pizzas",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/pizzas%2Favo-olives.jpg?alt=media&token=af204c4d-01ea-496c-9e44-a2a3426825a1&_gl=1*13ztypo*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA2ODc0LjI0LjAuMA..",
-        
+
         "items": [
             {
                 "name": "Avo Olived",
@@ -79,10 +84,10 @@ export const menu = {
             }
         ]
     },
-    "category6":{
+    "category6": {
         "category": "Desserts",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/desserts%2Fstrawberry-cream.jpg?alt=media&token=f038b8a1-73c3-4984-93ad-c22cacae3021&_gl=1*11ggz3k*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA3MjMzLjQuMC4w",
-        
+
         "items": [
             {
                 "name": "Blued Cream",
@@ -122,10 +127,10 @@ export const menu = {
             }
         ]
     },
-    "category7":{
+    "category7": {
         "category": "Platters",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/platters%2Fassorted-platter.jpeg?alt=media&token=91e82ddf-f211-4628-bd1b-877942028db1&_gl=1*15a1g58*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA3MzIzLjYwLjAuMA..",
-        
+
         "items": [
             {
                 "name": "Assorted Platter",
@@ -153,10 +158,10 @@ export const menu = {
             }
         ]
     },
-    "category8":{
+    "category8": {
         "category": "Pasta",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/noodles%2Fnoodle-2.jpg?alt=media&token=941b091e-af7d-4c82-b75e-37ecd7c442cd&_gl=1*diotyn*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA3NTg1LjYwLjAuMA..",
-        
+
         "items": [
             {
                 "name": "Ocean Planet",
@@ -184,10 +189,10 @@ export const menu = {
             }
         ]
     },
-    "category1":{
+    "category1": {
         "category": "Colds",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/cold-drinks%2Fassorted.jpg?alt=media&token=f594db20-9718-4b51-816d-a85ceb754c74&_gl=1*1q3g2ky*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA3ODQ1LjU3LjAuMA..",
-        
+
         "items": [
             {
                 "name": "Assorted 300ML",
@@ -239,10 +244,10 @@ export const menu = {
             }
         ]
     },
-    "category2":{
+    "category2": {
         "category": "Hots",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/hot-drinks%2Fcuppacino.jpg?alt=media&token=5ae6cde5-3036-4d79-a1d4-ed5d674d09fd&_gl=1*kjvc9f*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA4NDE0LjYwLjAuMA..",
-        
+
         "items": [
             {
                 "name": "Dark Coffee",
@@ -270,10 +275,10 @@ export const menu = {
             }
         ]
     },
-    "category3":{
+    "category3": {
         "category": "Alcohol",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/alcohol-drinks%2Fheineken.jpg?alt=media&token=7bd78897-3d64-476c-98d9-a96943984b6b&_gl=1*ukttg9*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA4NjY2LjU4LjAuMA..",
-        
+
         "items": [
             {
                 "name": "Red Wine",
@@ -301,10 +306,10 @@ export const menu = {
             }
         ]
     },
-    "category10":{
+    "category10": {
         "category": "Rice",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/rice%2Frice-1.jpg?alt=media&token=d76a0b6c-dacd-4bc6-a8a1-abeb41f1da73&_gl=1*18cm63l*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA4NzI3LjU3LjAuMA..",
-        
+
         "items": [
             {
                 "name": "Curried Bowl",
@@ -332,7 +337,7 @@ export const menu = {
             }
         ]
     },
-    "category11":{
+    "category11": {
         "category": "Sides",
         "image": "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/sides%2Ffries.jpg?alt=media&token=e31e6aae-4232-4ef3-abe0-d3fe090aab99&_gl=1*15x8c82*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5NzAwNjM4NS4xNDcuMS4xNjk3MDA4OTMwLjYwLjAuMA..",
         "items": [
@@ -362,7 +367,7 @@ export const menu = {
             }
         ]
     },
-}  
+}
 
 export const mainPromos = [
     {
@@ -377,13 +382,14 @@ export const mainPromos = [
         title: "Family Feast",
         discount: "25",
         extraInfo: "for a family of 6",
-        itemId:""
+        itemId: ""
     },
     {
         image: "https://firebasestorage.googleapis.com/v0/b/restaurant-app-5c17d.appspot.com/o/burgers%2Flunch-spree.jpg?alt=media&token=1d7b6912-e51d-43a1-bfe0-856f306c3a7d&_gl=1*1klzjmi*_ga*MTA4ODQwOTQyMS4xNjg3NzY0NTg0*_ga_CW55HF8NVT*MTY5Njk0Mjk5Ni4xNDYuMS4xNjk2OTQzMjQzLjUyLjAuMA..",
         title: "Lunch Spree",
         discount: "15",
         extraInfo: "sold between 11:00 and 13:00",
-        itemId:""
+        itemId: ""
     },
 ];
+

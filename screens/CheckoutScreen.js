@@ -13,15 +13,10 @@ import {
   Divider,
   TextInput,
   SegmentedButtons,
-  List,
-  Avatar,
-  Checkbox,
 } from "react-native-paper";
-import LottieView from "lottie-react-native";
-import { AntDesign } from "@expo/vector-icons";
-import CartItemCard from "../components/cards/CartItemCard";
 import { CartContext } from "../contexts/CartContext";
-import { menu } from "../database/dummyData";
+import { UserContext } from "../contexts/UserContext";
+import { shippingFee } from "../database/dummyData";
 import { Alert } from "react-native";
 
 import { usePaymentSheet } from "@stripe/stripe-react-native";
@@ -31,16 +26,19 @@ import { SafeAreaView } from "react-native";
 const CheckoutScreen = (props) => {
   // console.log("props", props);
   const animation = useRef(null);
-  const { cart, setCart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
+  const { user } = useContext(UserContext)
 
   const [cartTotal, setCartTotal] = useState(0)
   // console.log("cart screen====================--", cart);
-  const [shipping, setShipping] = useState("delivery");
+  const [shipping, setShipping] = useState("pickup");
   const [ready, setReady] = useState(false);
   const { initPaymentSheet, presentPaymentSheet, loading } = usePaymentSheet();
 
   useEffect(() => {
-    initialisePaymentSheet();
+    if (cartTotal > 0) {
+      initialisePaymentSheet();
+    }
   }, [])
 
   // The following code creates the appearance shown in the screenshot above
@@ -96,7 +94,7 @@ const CheckoutScreen = (props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount: 5500,
+        amount: cartTotal * 100,
       }),
     });
     const { paymentIntent } = await response.json();
@@ -113,34 +111,35 @@ const CheckoutScreen = (props) => {
         const total = obj.quantity * obj.price;
         return acc + total;
       }, 0);
-      setCartTotal(runningTotal.toFixed(2));
+      setCartTotal(runningTotal);
     };
     getCartTotal();
   }, [cart])
 
   const buy = async () => {
-    await saveCustomerOrder(createOrder())
+    // await saveCustomerOrder(createOrder()).then(() => {
+    // })
 
-    // console.log('first buy line', ready);
-    // const { error } = await presentPaymentSheet();
-    // console.log('await buy');
-    // if (error) {
-    //   Alert.alert(`Error code:  ${error.code}`, error.message);
-    // } else {
-    //   await saveCustomerOrder(createOrder())
-    //   .then(
-
-    //     Alert.alert("Success", "The payment was confirmed successfully")
-    //   )
-    // }
+    console.log('first buy line', ready);
+    const { error } = await presentPaymentSheet();
+    console.log('await buy');
+    if (error) {
+      Alert.alert(`Error code:  ${error.code}`, error.message);
+    } else {
+      await saveCustomerOrder(createOrder())
+        .then(() => {
+          clearCart();
+          props.navigation.navigate("OrderConfirmed")
+        })
+    }
   }
 
   const createOrder = () => {
     const orderDateTime = new Date();
     const order = {
-      customerName: "Nicholas Rabalao",
-      email: "rabalao@gmail.com",
-      phoneNumber:"0614556378",
+      customerName: user.fullName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
       shipping: "Pick Up",
       items: cart,
       specialInstruction: "No icecubes on this order",
@@ -150,6 +149,8 @@ const CheckoutScreen = (props) => {
     }
     return order;
   }
+
+  console.log('type of cartTotal --', typeof cartTotal);
 
   return (
     <SafeAreaView className="pt-12 px-3 flex-col w-screen flex-1 relative items-center bg-white">
@@ -170,9 +171,9 @@ const CheckoutScreen = (props) => {
         <View className="mb-3">
           <Text className=" text-gray-800" style={{ fontFamily: "GoodDogNew", fontSize: 24 }}>1. Profile</Text>
           <View className="ml-3">
-            <Text className="text-base">Nicholas Rabalao</Text>
-            <Text className="text-base">mrnicrab@gmail.com</Text>
-            <Text className="text-base">0614534562</Text>
+            <Text className="text-base">{user.fullName}</Text>
+            <Text className="text-base">{user.email}</Text>
+            <Text className="text-base">{user.phoneNumber}</Text>
           </View>
         </View>
         <View className="mb-3">
@@ -185,15 +186,14 @@ const CheckoutScreen = (props) => {
             theme={{ colors: { secondaryContainer: "#F4E1D5" } }}
             buttons={[
               {
-                value: "delivery",
-                label: "Delivery",
-                showSelectedCheck: true
-              },
-              {
                 value: "pickup",
                 label: "Pick up",
                 showSelectedCheck: true
-
+              },
+              {
+                value: "delivery",
+                label: "Delivery",
+                showSelectedCheck: true
               },
             ]}
           />
@@ -202,16 +202,16 @@ const CheckoutScreen = (props) => {
 
         {cart && cart.length > 0 && (
           <View className="w-full p-1 flex-col h-full">
-            <Text className=" text-gray-800" style={{ fontFamily: "GoodDogNew", fontSize: 24 }}>3. Order summary</Text>
+            <Text className=" text-gray-800" style={{ fontFamily: "GoodDogNew", fontSize: 24 }}>3. Order Summary</Text>
             {
               cart.map((item, index) => {
                 return (
                   <>
-                    <View className="flex-row p-2">
+                    <View className="flex-row p-2" key={item.id}>
                       <View className="h-full mr-4 rounded-sm flex-1 border border-gray-300">
                         <Image
                           source={{ uri: item?.image }}
-                          className="h-full rounded-sm flex-1 "
+                          className="h-full rounded-sm flex-1"
                           resizeMode="cover"
                         />
                       </View>
@@ -235,13 +235,13 @@ const CheckoutScreen = (props) => {
               Customers can provide specific instructions for the delivery driver, such as gate codes, apartment numbers, or any other information that will help them locate the delivery address easily.
             </Text>
 
-            <View className="rounded mt-10 p-3 bg-gray-200 w-full h-auto flex-col">
+            <View className="rounded mt-10 mb-20 p-3 bg-gray-200 w-full h-auto flex-col">
               <View className="flex-row justify-between">
                 <Text variant="bodyMedium" className="font-semibold">
                   Subtotal:
                 </Text>
                 <Text variant="bodyMedium" className="font-semibold">
-                  R{cartTotal}
+                  R{cartTotal.toFixed(2)}
                 </Text>
               </View>
               <View className="flex-row justify-between my-2">
@@ -249,7 +249,7 @@ const CheckoutScreen = (props) => {
                   Shipping:
                 </Text>
                 <Text variant="bodyMedium" className="font-semibold">
-                  {"R0.00"}
+                  R{shippingFee[shipping].toFixed(2)}
                 </Text>
               </View>
               <Divider />
@@ -258,7 +258,7 @@ const CheckoutScreen = (props) => {
                   Total:
                 </Text>
                 <Text variant="bodyMedium" className="font-bold">
-                  {cartTotal}
+                  R{(cartTotal + shippingFee[shipping]).toFixed(2)}
                 </Text>
               </View>
             </View>
