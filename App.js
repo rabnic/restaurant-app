@@ -29,8 +29,8 @@ export default function App() {
 
   return (
     <StripeProvider
-      publishableKey={"publishableKey"}
-      merchantIdentifier="merchant.identifier" // required for Apple Pay
+      publishableKey={"pk_test_51O28R3GkBIv4HXchCkY0ATvYHcAFzXM244xd51GEwrruTHWU2QMH1lK5mKu7t2V3pW8nRJMm9hJwzbWSpOfO8KeU00Ng2VvPMj"}
+      // merchantIdentifier="merchant.identifier" // required for Apple Pay
       urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
     >
       <UserProvider>

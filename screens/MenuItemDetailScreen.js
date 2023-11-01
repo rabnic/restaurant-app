@@ -46,9 +46,10 @@ const MenuItemDetailScreen = ({ route }) => {
         return;
       }
       setLocalCartItem({
+        id: "N101",
         name,
         image,
-        price: Number(refreshment.price),
+        price: Number(price),
         quantity: 1,
       });
     };
@@ -101,11 +102,14 @@ const MenuItemDetailScreen = ({ route }) => {
         resizeMode="cover"
       >
         <View
-          className="w-full h-full border absolute flex-col justify-end rounded-2xl pl-3 pr-5 pb-5"
+          className="w-full h-full absolute flex-col justify-end p-3"
           style={{ backgroundColor: "rgba(0,0,0,.3)" }}
         >
-          <View className="h-fit flex-row justify-between">
-            <Text variant="headlineLarge" className="text-white font-bold">
+          <View className="h-fit flex-row justify-between items-center">
+            <Text
+              className="tracking-widest text-white"
+              style={{ fontFamily: "Lobster-Regular", fontSize: hp(4.5) }}
+            >
               {refreshment.name}
             </Text>
             <MaterialCommunityIcons
@@ -130,10 +134,10 @@ const MenuItemDetailScreen = ({ route }) => {
         <Text></Text>
       </ImageBackground>
       <View className="flex-1 p-3">
-        <Text variant="headlineMedium" className="mb-3 font-bold">
+        <Text className="mb-1.5" style={{ fontSize: hp(3), fontWeight: "300" }}>
           Description
         </Text>
-        <Text variant="headlineSmall" className="leading-8 mb-3">
+        <Text className="leading-1 mb-3" style={{ fontSize: hp(2.5), fontWeight: "300" }}>
           {refreshment.description}
         </Text>
         <Divider />

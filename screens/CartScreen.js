@@ -2,12 +2,9 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  Image,
   ScrollView,
-  Platform,
-  KeyboardAvoidingView,
 } from "react-native";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Button,
   Text,
@@ -18,38 +15,57 @@ import {
   Avatar,
   Checkbox,
 } from "react-native-paper";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import LottieView from "lottie-react-native";
 import { AntDesign } from "@expo/vector-icons";
 import CartItemCard from "../components/cards/CartItemCard";
 import { CartContext } from "../contexts/CartContext";
-import { menu } from "../database/dummyData";
+import { Alert } from "react-native";
 
 const CartScreen = (props) => {
   console.log("props", props);
   const animation = useRef(null);
   const { cart, setCart } = useContext(CartContext);
-  console.log("cart screen====================--", cart);
+
+  const [cartTotal, setCartTotal] = useState(0)
+  // console.log("cart screen====================--", cart);
   const [value, setValue] = useState("");
 
-  const getCartTotal = () => { };
+
+
+  useEffect(() => {
+    const getCartTotal = () => {
+
+      const runningTotal = cart.reduce((acc, obj) => {
+        const total = obj.quantity * obj.price;
+        return acc + total;
+      }, 0);
+      setCartTotal(runningTotal.toFixed(2));
+    };
+    getCartTotal();
+  }, [cart])
+
 
   return (
-    <SafeAreaView className="pt-12 px-2 flex-1 relative bg-white">
+    <SafeAreaView className="pt-12 px-0 flex-1 border bg-white">
       <ScrollView
-        className="flex-1 flex-col"
+        className="flex-1 flex-col flex-1  relative"
         showsVerticalScrollIndicator={false}
       // contentContainerStyle={{ flex: 1 }}
       >
         <View className="w-full justify-center flex-row p-3 mb-2">
           <Text
             className="my-1 p-1 tracking-widest"
-            style={{ fontFamily: "Lobster-Regular", fontSize: 40 }}
+            style={{ fontFamily: "Lobster-Regular", fontSize: wp(10) }}
           >
             Cart
           </Text>
         </View>
         {cart && cart.length > 0 ? (
-          <View className="w-full p-1 flex-col h-full">
+          <View className="w-[96%] p-1 mx-2 flex-col flex-1">
             {cart.map((item, index) => {
               return (
                 <CartItemCard
@@ -57,6 +73,7 @@ const CartScreen = (props) => {
                   index={index}
                   cart={cart}
                   setCart={setCart}
+                  key={item.name}
                 />
               );
             })}
@@ -120,7 +137,7 @@ const CartScreen = (props) => {
                   Subtotal:
                 </Text>
                 <Text variant="bodyMedium" className="font-semibold">
-                  R115.00
+                  R{cartTotal}
                 </Text>
               </View>
               <View className="flex-row justify-between my-2">
@@ -137,31 +154,22 @@ const CartScreen = (props) => {
                   Total:
                 </Text>
                 <Text variant="bodyMedium" className="font-bold">
-                  {getCartTotal()}
+                  {cartTotal}
                 </Text>
               </View>
             </View>
-            <Button
-              style={{ marginTop: 55 }}
-              mode="contained"
-              buttonColor="#DD5A44"
-              uppercase={true}
-              onPress={() => console.log("Pressed")}
-              contentStyle={{ marginHorizontal: 4, height: 50 }}
-            >
-              Checkout
-            </Button>
+
           </View>
         ) : (
-          <View className="w-full h-100 justify-center items-center flex-1 p-4 mt-8">
+          <View className="w-full h-100 justify-center items-center flex-1 p-1 mt-8">
             <LottieView
               source={require("../assets/animations/animation_empty_cart.json")}
               autoPlay
               loop
               ref={animation}
-              style={{ width: "95%", height: "auto" }}
+              style={{ width: wp(90), height: wp(70) }}
             />
-            <Text variant="headlineSmall" className="font-bold">
+            <Text className="font-semibold" style={{ fontSize: wp(5.5) }}>
               Cart is empty
             </Text>
             <Button
@@ -169,14 +177,25 @@ const CartScreen = (props) => {
               mode="contained"
               buttonColor="#DD5A44"
               uppercase={true}
-              onPress={() => props.jumpTo("home")}
+              onPress={() => props.navigation.navigate("BottomNavigation", { index: 0 })}
               contentStyle={{ height: 50 }}
             >
               Go to Home
             </Button>
           </View>
         )}
+        <Button
+          style={{ position: "relative", bottom: 0, marginVertical: 20, marginHorizontal: 10 }}
+          mode="contained"
+          buttonColor="#DD5A44"
+          uppercase={true}
+          onPress={() => props.navigation.navigate("Checkout")}
+          contentStyle={{ marginHorizontal: 4, height: 50 }}
+        >
+          Checkout
+        </Button>
       </ScrollView>
+
     </SafeAreaView>
   );
 };

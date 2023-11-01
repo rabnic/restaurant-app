@@ -9,6 +9,8 @@ import SignUpScreen from "../screens/SignUpScreen";
 import BottomNavigationLocal from "./BottomNavigationLocal";
 import CartHeaderIcon from "../components/CartHeaderIcon";
 import { CartContext } from "../contexts/CartContext";
+import CheckoutScreen from "../screens/CheckoutScreen";
+import OrderConfirmationScreen from "../screens/OrderConfirmationScreen";
 
 const MainNavigation = () => {
   const Stack = createNativeStackNavigator();
@@ -18,8 +20,6 @@ const MainNavigation = () => {
     return total + currentItem.quantity;
   }, 0);
 
-  //custom cheat function to navigate to a nested navigator stack screen
-  const goToCartFromDetailScreen = () => {};
 
   useEffect(() => {
     // const totalQuantity = cart.reduce((total, currentItem) => {
@@ -66,6 +66,18 @@ const MainNavigation = () => {
           })}
         />
         <Stack.Screen
+          name="Checkout"
+          component={CheckoutScreen}
+          options={() => ({
+            headerTransparent: true,
+            title: "",
+            headerTintColor: "#aaa",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          })}
+        />
+        <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{
@@ -84,6 +96,20 @@ const MainNavigation = () => {
             headerTransparent: true,
             title: "",
             headerTintColor: "#777",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          })}
+        />
+        <Stack.Screen
+          name="OrderConfirmed"
+          component={OrderConfirmationScreen}
+
+          options={() => ({
+            headerTransparent: true,
+            headerShown: false,
+            title: "",
+            headerTintColor: "#aaa",
             headerTitleStyle: {
               fontWeight: "bold",
             },
