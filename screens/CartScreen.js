@@ -184,16 +184,19 @@ const CartScreen = (props) => {
             </Button>
           </View>
         )}
-        <Button
-          style={{ position: "relative", bottom: 0, marginVertical: 20, marginHorizontal: 10 }}
-          mode="contained"
-          buttonColor="#DD5A44"
-          uppercase={true}
-          onPress={() => props.navigation.navigate("Checkout")}
-          contentStyle={{ marginHorizontal: 4, height: 50 }}
-        >
-          Checkout
-        </Button>
+        {
+          cart && cart.length > 0 &&
+          <Button
+            style={{ position: "relative", bottom: 0, marginVertical: 20, marginHorizontal: 10 }}
+            mode="contained"
+            buttonColor="#DD5A44"
+            uppercase={true}
+            onPress={() => props.navigation.navigate("Checkout")}
+            contentStyle={{ marginHorizontal: 4, height: 50 }}
+          >
+            Checkout
+          </Button>
+        }
       </ScrollView>
 
     </SafeAreaView>

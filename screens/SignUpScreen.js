@@ -49,7 +49,7 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
             phone: phoneNumber
           }).then(() => {
             console.log("Registered yahaaaaaa");
-            updateAuthUser({ email, fullName, phoneNumber });
+            updateAuthUser({ email, fullName, phoneNumber, favorites:[] });
           });
           // setIsLoading(false);
         } else {

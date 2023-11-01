@@ -23,12 +23,14 @@ import { usePaymentSheet } from "@stripe/stripe-react-native";
 import { saveCustomerOrder } from "../services/firebase";
 import { SafeAreaView } from "react-native";
 
+import { useIsFocused } from "@react-navigation/native";
+
 const CheckoutScreen = (props) => {
   // console.log("props", props);
   const animation = useRef(null);
   const { cart, clearCart } = useContext(CartContext);
   const { user } = useContext(UserContext)
-
+  const isFocused = useIsFocused();
   const [cartTotal, setCartTotal] = useState(0)
   // console.log("cart screen====================--", cart);
   const [shipping, setShipping] = useState("pickup");
@@ -36,10 +38,17 @@ const CheckoutScreen = (props) => {
   const { initPaymentSheet, presentPaymentSheet, loading } = usePaymentSheet();
 
   useEffect(() => {
-    if (cartTotal > 0) {
-      initialisePaymentSheet();
+    console.log("carrtttttt",cart)
+    if (cart && cart.length === 0) {
+      props.navigation.navigate("BottomNavigation", { index: 0 })
     }
-  }, [])
+  },[isFocused])
+
+  useEffect(() => {
+    // if (cartTotal > 0) {
+      initialisePaymentSheet();
+    // }
+  }, [cartTotal])
 
   // The following code creates the appearance shown in the screenshot above
   const customAppearance = {
@@ -135,15 +144,16 @@ const CheckoutScreen = (props) => {
   }
 
   const createOrder = () => {
+    const _100_CENTS = 100;
     const orderDateTime = new Date();
     const order = {
-      customerName: user.fullName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
+      customerName: "user.fullName",
+      email: "user.email",
+      phoneNumber: "user.phoneNumber",
       shipping: "Pick Up",
       items: cart,
       specialInstruction: "No icecubes on this order",
-      totalBill: cartTotal,
+      totalBill: cartTotal * _100_CENTS,
       createTime: orderDateTime.toLocaleTimeString(),
       creationDate: orderDateTime.toLocaleDateString(),
     }
@@ -151,6 +161,8 @@ const CheckoutScreen = (props) => {
   }
 
   console.log('type of cartTotal --', typeof cartTotal);
+
+  if (cart && cart.length === 0) return null;
 
   return (
     <SafeAreaView className="pt-12 px-3 flex-col w-screen flex-1 relative items-center bg-white">
@@ -171,9 +183,9 @@ const CheckoutScreen = (props) => {
         <View className="mb-3">
           <Text className=" text-gray-800" style={{ fontFamily: "GoodDogNew", fontSize: 24 }}>1. Profile</Text>
           <View className="ml-3">
-            <Text className="text-base">{user.fullName}</Text>
-            <Text className="text-base">{user.email}</Text>
-            <Text className="text-base">{user.phoneNumber}</Text>
+            <Text className="text-base">{"user.fullName"}</Text>
+            <Text className="text-base">{"user.email"}</Text>
+            <Text className="text-base">{"user.phoneNumber"}</Text>
           </View>
         </View>
         <View className="mb-3">
