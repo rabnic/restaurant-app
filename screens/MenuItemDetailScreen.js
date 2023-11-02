@@ -27,6 +27,7 @@ import {
 } from "react-native-responsive-screen";
 import { styled } from "nativewind";
 import { CartContext } from "../contexts/CartContext";
+import { UserContext } from "../contexts/UserContext";
 import CartHeaderIcon from "../components/CartHeaderIcon";
 import { showMessage, hideMessage } from "react-native-flash-message";
 
@@ -34,7 +35,9 @@ const MenuItemDetailScreen = ({ route }) => {
   const { refreshment } = route.params;
   const [localCartItem, setLocalCartItem] = useState();
   const { cart, setCart } = useContext(CartContext);
-  const [isLiked, setIsLiked] = useState(false);
+  const { user, updateFavorites } = useContext(UserContext);
+  const isInFavorites = user?.favorites?.includes(refreshment.name)
+  const [isLiked, setIsLiked] = useState(isInFavorites);
   //   console.log("cart detail--", cart);
 
   useEffect(() => {
@@ -57,6 +60,8 @@ const MenuItemDetailScreen = ({ route }) => {
     return prepareLocalCartItem();
   }, []);
 
+
+
   const increment = () => {
     setLocalCartItem((prev) => {
       return { ...prev, quantity: prev.quantity + 1 };
@@ -74,13 +79,13 @@ const MenuItemDetailScreen = ({ route }) => {
   };
 
   const handleAddToCart = () => {
-    console.log("current cart ==", cart);
+    // console.log("current cart ==", cart);
     const matchedItemIndex = cart.findIndex(
       (item) => item.name === localCartItem.name
     );
     const updatedCart = [...cart];
     if (matchedItemIndex != -1) {
-      console.log("local", localCartItem);
+      // console.log("local", localCartItem);
       updatedCart[matchedItemIndex] = localCartItem;
       setCart(updatedCart);
     } else {
@@ -91,6 +96,11 @@ const MenuItemDetailScreen = ({ route }) => {
       type: "success",
     });
   };
+
+  const handleToggleFavorite = () => {
+    updateFavorites(refreshment.name)
+    setIsLiked(!isLiked)
+  }
 
   return (
     <SafeAreaView className=" flex-1 w-screen flex-col relative">
@@ -116,7 +126,7 @@ const MenuItemDetailScreen = ({ route }) => {
               name={isLiked ? "cards-heart" : "cards-heart-outline"}
               size={32}
               color={isLiked ? "tomato" : "white"}
-              onPress={() => setIsLiked(!isLiked)}
+              onPress={handleToggleFavorite}
             />
           </View>
           {/* <View className="flex-row justify-start gap-2">

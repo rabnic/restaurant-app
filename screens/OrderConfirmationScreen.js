@@ -1,24 +1,24 @@
 import { StyleSheet, View, SafeAreaView } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Button, Text } from 'react-native-paper'
 import AnimatedLottieView from 'lottie-react-native'
+import { CartContext } from "../contexts/CartContext";
 
 const OrderConfirmationScreen = ({ navigation }) => {
   const animation = useRef(null);
   const [countDown, setCountDown] = useState(5);
-  console.log('navigation', navigation);
+  console.log('navigation', navigation.getState());
+  const { cart,clearCart } = useContext(CartContext);
+
 
   useEffect(() => {
-    // const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-    //   // do something
-    //   console.log('went back');
-    //   e.preventDefault();
-    //   // navigation.navigate("BottomNavigation", { index: 0 });
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
 
-    // });
-
-    // return unsubscribe;
-  }, [navigation]);
+      console.log('cart', cart)
+      clearCart();
+    })
+    return unsubscribe;
+  }, []);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {

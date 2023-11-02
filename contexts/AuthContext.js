@@ -4,7 +4,7 @@ import { UserContext } from './UserContext';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const {setUser} = useContext(UserContext)
+  const {createNewUser, clearUser} = useContext(UserContext)
   const [authUser, setAuthUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -15,11 +15,11 @@ export const AuthProvider = ({ children }) => {
 
   const updateAuthUser = (updatedAuthUser) => {
     setAuthUser(updatedAuthUser)
-    // if(updateAuthUser === null) {
-      // setUser(updateAuthUser);
-    // } else {
-      setUser(updatedAuthUser);
-    // }
+    if(updatedAuthUser === null) {
+      clearUser();
+    } else {
+      createNewUser(updatedAuthUser);
+    }
   }
 
   // if (isLoading) {

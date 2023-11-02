@@ -175,7 +175,7 @@ export const registerUser = async (user) => {
     fields: {
       fullName: { stringValue: user.fullName },
       email: { stringValue: user.email },
-      phone: { stringValue: user.phone },
+      phoneNumber: { stringValue: user.phoneNumber },
     },
   };
   console.log(firebaseDocumentStructure);

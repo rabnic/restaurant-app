@@ -23,8 +23,8 @@ import { showMessage } from "react-native-flash-message";
 const SignInScreen = ({navigation, route}) => {
   const { authUser, updateAuthUser } = useContext(AuthContext)
  
-  console.log('navigation',navigation);
-  console.log('route',route);
+  // console.log('navigation',navigation);
+  // console.log('route',route);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,7 @@ const SignInScreen = ({navigation, route}) => {
   }
 
   const handleSignIn = async () => {
-    console.log(">>>  Login");
+    // console.log(">>>  Login");
     // setIsLoading(true);
 
     // if (email.trim().length < 1 || password.trim().length < 1) {
@@ -49,7 +49,7 @@ const SignInScreen = ({navigation, route}) => {
 
     await signInUserWithEmailAndPassword(email.toLowerCase().trim(), password)
       .then((response) => {
-        console.log("signed in---", response);
+        // console.log("signed in---", response);
         if (response.status === "success") {
           updateAuthUser({ email: response.email, fullName: "Nicholas Rabalao" })
           setIsLoading(false);

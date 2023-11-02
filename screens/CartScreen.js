@@ -26,7 +26,7 @@ import { CartContext } from "../contexts/CartContext";
 import { Alert } from "react-native";
 
 const CartScreen = (props) => {
-  console.log("props", props);
+  // console.log("props", props);
   const animation = useRef(null);
   const { cart, setCart } = useContext(CartContext);
 
@@ -50,9 +50,9 @@ const CartScreen = (props) => {
 
 
   return (
-    <SafeAreaView className="pt-12 px-0 flex-1 border bg-white">
+    <SafeAreaView className="pt-12 px-0 flex-1  bg-white">
       <ScrollView
-        className="flex-1 flex-col flex-1  relative"
+        className="flex-1 flex-col  relative"
         showsVerticalScrollIndicator={false}
       // contentContainerStyle={{ flex: 1 }}
       >
@@ -154,7 +154,7 @@ const CartScreen = (props) => {
                   Total:
                 </Text>
                 <Text variant="bodyMedium" className="font-bold">
-                  {cartTotal}
+                  R{cartTotal}
                 </Text>
               </View>
             </View>

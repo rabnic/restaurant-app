@@ -4,7 +4,7 @@ import { Badge } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const CartHeaderIcon = ({ totalQuantity, navigation }) => {
-  console.log("navigation---", navigation.getState().routeNames);
+  // console.log("navigation---", navigation.getState().routeNames);
   return (
     <View style={{ width: 28, marginRight: 6 }}>
       <TouchableOpacity

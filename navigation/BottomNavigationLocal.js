@@ -12,7 +12,7 @@ import FavoritesScreen from "../screens/FavoritesScreen";
 const BottomNavigationLocal = ({ route, navigation }) => {
   const { cart, setCart } = useContext(CartContext);
   const [cartCounter, setCartCounter] = useState(0);
-  console.log('route', route.params);
+  // console.log('route', route.params);
 
   useEffect(() => {
     const totalQuantity = cart.reduce((total, currentItem) => {
@@ -28,7 +28,7 @@ const BottomNavigationLocal = ({ route, navigation }) => {
   const [index, setIndex] = useState(0);
 useEffect(()=> {
   if(route.params?.hasOwnProperty('index')) {
-    console.log('inside params index');
+    // console.log('inside params index');
     setIndex(route.params.index);
   }
 }, [route.params])

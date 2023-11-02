@@ -18,15 +18,13 @@ import { CartContext } from "../contexts/CartContext";
 import { UserContext } from "../contexts/UserContext";
 import { shippingFee } from "../database/dummyData";
 import { Alert } from "react-native";
-
 import { usePaymentSheet } from "@stripe/stripe-react-native";
 import { saveCustomerOrder } from "../services/firebase";
 import { SafeAreaView } from "react-native";
 
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 const CheckoutScreen = (props) => {
-  // console.log("props", props);
   const animation = useRef(null);
   const { cart, clearCart } = useContext(CartContext);
   const { user } = useContext(UserContext)
@@ -38,17 +36,18 @@ const CheckoutScreen = (props) => {
   const { initPaymentSheet, presentPaymentSheet, loading } = usePaymentSheet();
 
   useEffect(() => {
-    console.log("carrtttttt",cart)
+    console.log("carrtttttt",cart, cart.length)
     if (cart && cart.length === 0) {
       props.navigation.navigate("BottomNavigation", { index: 0 })
     }
-  },[isFocused])
+  },[cart])
 
   useEffect(() => {
     // if (cartTotal > 0) {
       initialisePaymentSheet();
     // }
   }, [cartTotal])
+
 
   // The following code creates the appearance shown in the screenshot above
   const customAppearance = {
@@ -91,7 +90,7 @@ const CheckoutScreen = (props) => {
     if (error) {
       Alert.alert(`Error code:  ${error.code}`, error.message)
     } else {
-      console.log('setting ready to true');
+      // console.log('setting ready to true');
       setReady(true);
     }
   }
@@ -107,7 +106,7 @@ const CheckoutScreen = (props) => {
       }),
     });
     const { paymentIntent } = await response.json();
-    console.log('PaymentIntent in fetch', paymentIntent);
+    // console.log('PaymentIntent in fetch', paymentIntent);
     return {
       paymentIntent
     };
@@ -129,17 +128,19 @@ const CheckoutScreen = (props) => {
     // await saveCustomerOrder(createOrder()).then(() => {
     // })
 
-    console.log('first buy line', ready);
-    const { error } = await presentPaymentSheet();
-    console.log('await buy');
+    // console.log('first buy line', ready);
+    // const { error } = await presentPaymentSheet();
+    const error = false;
+    // console.log('await buy');
     if (error) {
       Alert.alert(`Error code:  ${error.code}`, error.message);
     } else {
-      await saveCustomerOrder(createOrder())
-        .then(() => {
-          clearCart();
-          props.navigation.navigate("OrderConfirmed")
-        })
+      props.navigation.navigate("OrderConfirmed")
+      // await saveCustomerOrder(createOrder())
+      //   .then(() => {
+      //     clearCart();
+      //     props.navigation.navigate("OrderConfirmed")
+      //   })
     }
   }
 
@@ -160,9 +161,9 @@ const CheckoutScreen = (props) => {
     return order;
   }
 
-  console.log('type of cartTotal --', typeof cartTotal);
+  // console.log('type of cartTotal --', typeof cartTotal);
 
-  if (cart && cart.length === 0) return null;
+  if (cart && cart.length === 0)  return;
 
   return (
     <SafeAreaView className="pt-12 px-3 flex-col w-screen flex-1 relative items-center bg-white">
@@ -227,10 +228,10 @@ const CheckoutScreen = (props) => {
                           resizeMode="cover"
                         />
                       </View>
-                      <View className="flex-[3]">
+                      <View className="flex-[3] flex-col">
                         <Text className="text-black">{item.name}</Text>
                         <Text>Quantity: {item.quantity}</Text>
-                        <Text>R {item.price}</Text>
+                        <Text className="ml-auto">R {item.price}</Text>
                       </View>
                     </View>
                     {index !== cart.length - 1 &&

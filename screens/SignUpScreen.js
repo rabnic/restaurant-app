@@ -15,7 +15,7 @@ import { registerUser, signUpWithEmailAndPassword } from "../services/firebase";
 
 
 const SignUpScreen = ({ navigation }) => {
-// const {user, setUser} = useContext(UserContext);
+const {user, setUser} = useContext(UserContext);
 const {authUser, updateAuthUser} = useContext(AuthContext);
 
   const [fullName, setFullName] = useState("");
@@ -31,8 +31,7 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
   }
 
   const handleSignUp = () => {
-    console.log(">>>  Register");
-
+    // console.log(">>>  Register");
     // if (fullName.trim().length < 1 || email.trim().length < 1 || password.trim().length < 1 || phoneNumber.trim().length < 1) {
     //   Alert.alert('Sign Up Error:', alertMessages['EMPTY_INPUTS'], [
     //     { text: 'Ok', onPress: () => console.log('Sign In error Ok pressed') },
@@ -46,10 +45,10 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
           await registerUser({
             fullName,
             email: email.toLowerCase().trim(),
-            phone: phoneNumber
+            phoneNumber
           }).then(() => {
             console.log("Registered yahaaaaaa");
-            updateAuthUser({ email, fullName, phoneNumber, favorites:[] });
+            updateAuthUser({ email, fullName, phoneNumber});
           });
           // setIsLoading(false);
         } else {
