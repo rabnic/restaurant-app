@@ -502,3 +502,90 @@ export const mainPromos = [
 const menuData = {
     
 }
+
+///
+// Example array of objects of arrays
+const user = {
+  "name": "projects/restaurant-app-5c17d/databases/(default)/documents/users/pPvPQzEqCoRP6c4THbyh",
+  "fields": {
+      "fullName": {
+          "stringValue": "Nicholas Rabalao"
+      },
+      "orders": {
+          "arrayValue": {
+              "values": [
+                  {
+                      "stringValue": "order1"
+                  },
+                  {
+                      "stringValue": "order2"
+                  },
+                  {
+                      "stringValue": "order3"
+                  }
+              ]
+          }
+      },
+      "favorites": {
+          "arrayValue": {
+              "values": [
+                  {
+                      "stringValue": "id1"
+                  },
+                  {
+                      "stringValue": "id2"
+                  },
+                  {
+                      "stringValue": "id3"
+                  }
+              ]
+          }
+      },
+      "phoneNumber": {
+          "stringValue": "0817651234"
+      },
+      "addresses": {
+          "mapValue": {
+              "fields": {
+                  "workplace": {
+                      "stringValue": "my workplace address"
+                  },
+                  "home": {
+                      "stringValue": "my home address"
+                  }
+              }
+          }
+      },
+      "email": {
+          "stringValue": "mrnicrab@gmail.com"
+      }
+  },
+  "createTime": "2023-11-03T09:11:13.566273Z",
+  "updateTime": "2023-11-03T09:11:13.566273Z"
+}
+
+const convertToJson = (firebaseObj) => {
+const fieldsObject = firebaseObj.fields;
+const stringFields = ["email","phoneNumber", "fullName"];
+const arrayFields = ["orders","favorites"];
+let result = {};
+Object.keys(fieldsObject).forEach((key) => {
+  if (stringFields.includes(key)) {
+    
+  } else if (arrayFields.includes(key)) {
+    
+  }
+  result = {...result}
+})
+
+}
+
+const convertStringValue = (key, stringObject) => {
+return {[key]: stringObject.stringValue}
+}
+
+const convertArrayValue = (key, arrayObject) => {
+const values = arrayObject.arrayValue.values.map((elem) => elem.stringValue)
+}
+
+convertToJson(user)
