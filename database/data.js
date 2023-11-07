@@ -565,27 +565,35 @@ const user = {
 }
 
 const convertToJson = (firebaseObj) => {
-const fieldsObject = firebaseObj.fields;
-const stringFields = ["email","phoneNumber", "fullName"];
-const arrayFields = ["orders","favorites"];
-let result = {};
-Object.keys(fieldsObject).forEach((key) => {
-  if (stringFields.includes(key)) {
-    
-  } else if (arrayFields.includes(key)) {
-    
-  }
-  result = {...result}
-})
-
+  const fieldsObject = firebaseObj.fields;
+  const stringFields = ["email","phoneNumber", "fullName"];
+  const arrayFields = ["orders","favorites"];
+  const mapFields = ["addresses"];
+  let result = {};
+  Object.keys(fieldsObject).forEach((key) => {
+    if (stringFields.includes(key)) {
+        result[key] = convertStringValue(fieldsObject[key]);
+    } else if (arrayFields.includes(key)) {
+      result[key] = convertArrayValue(fieldsObject[key])
+    } else if (mapFields.includes(key)) {
+      result[key] =  convertFirebaseMapToJSON(fieldsObject[key]);
+    }
+  })
+  console.log('Result:',result)
 }
 
-const convertStringValue = (key, stringObject) => {
-return {[key]: stringObject.stringValue}
+const convertFirebaseMapToJSON = (mapObject) => {
+  let result = {}
+  Object.keys(mapObject.mapValue.fields).forEach((key) => {
+    result[key] = mapObject.mapValue.fields[key].stringValue;
+  })
+  return result;
 }
 
-const convertArrayValue = (key, arrayObject) => {
-const values = arrayObject.arrayValue.values.map((elem) => elem.stringValue)
+const convertStringValue = (stringObject) => {
+  return stringObject.stringValue
 }
 
-convertToJson(user)
+const convertArrayValue = (arrayObject) => {
+  return arrayObject.arrayValue.values.map((elem) => convertStringValue(elem))
+}

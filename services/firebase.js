@@ -214,6 +214,8 @@ export const getUser = async (userEmail) => {
     .catch((error) => console.log("Error getting user document: ", error));
 };
 
+//pPvPQzEqCoRP6c4THbyh
+
 export const saveCustomerOrder = async (order) => {
   console.log("order", order);
   const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${ORDERS}`;
