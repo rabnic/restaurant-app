@@ -23,15 +23,19 @@ import LottieView from "lottie-react-native";
 import { AntDesign } from "@expo/vector-icons";
 import CartItemCard from "../components/cards/CartItemCard";
 import { CartContext } from "../contexts/CartContext";
+import { UserContext } from "../contexts/UserContext";
+
 import { Alert } from "react-native";
+
 
 const CartScreen = (props) => {
   // console.log("props", props);
+  const { user } = useContext(UserContext);
   const animation = useRef(null);
   const { cart, setCart } = useContext(CartContext);
 
   const [cartTotal, setCartTotal] = useState(0)
-  // console.log("cart screen====================--", cart);
+  console.log("cart screen====================--", user);
   const [value, setValue] = useState("");
 
 
@@ -47,7 +51,7 @@ const CartScreen = (props) => {
     };
     getCartTotal();
   }, [cart])
-
+ 
 
   return (
     <SafeAreaView className="pt-12 px-0 flex-1  bg-white">
@@ -191,7 +195,7 @@ const CartScreen = (props) => {
             mode="contained"
             buttonColor="#DD5A44"
             uppercase={true}
-            onPress={() => props.navigation.navigate("Checkout")}
+            onPress={() => user ? props.navigation.navigate("Checkout") : props.navigation.navigate("SignIn")}
             contentStyle={{ marginHorizontal: 4, height: 50 }}
           >
             Checkout

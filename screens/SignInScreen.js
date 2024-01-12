@@ -17,7 +17,7 @@ import { useFonts, Lobster_400Regular } from "@expo-google-fonts/lobster";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { AuthContext } from "../contexts/AuthContext";
-import { signInUserWithEmailAndPassword } from "../services/firebase";
+import { getUser, signInUserWithEmailAndPassword } from "../services/firebase";
 import { showMessage } from "react-native-flash-message";
 
 const SignInScreen = ({navigation, route}) => {
@@ -48,9 +48,11 @@ const SignInScreen = ({navigation, route}) => {
     // }
 
     await signInUserWithEmailAndPassword(email.toLowerCase().trim(), password)
-      .then((response) => {
+      .then( async (response) => {
         // console.log("signed in---", response);
         if (response.status === "success") {
+          const testingUser = await getUser(response.email)
+          console.log("testinguser", testingUser)
           updateAuthUser({ email: response.email, fullName: "Nicholas Rabalao" })
           setIsLoading(false);
           showMessage({

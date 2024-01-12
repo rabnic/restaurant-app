@@ -77,3 +77,5 @@ const OrderConfirmationScreen = ({ navigation }) => {
 export default OrderConfirmationScreen
 
 const styles = StyleSheet.create({})
+
+// ToDo: sign in before placing order

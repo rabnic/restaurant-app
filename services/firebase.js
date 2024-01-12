@@ -208,7 +208,7 @@ export const getUser = async (userEmail) => {
         email: user.fields.email.stringValue,
         fullName: user.fields.fullName.stringValue,
       };
-      console.log(normalObjectStructure);
+      console.log("-----------------------------------",normalObjectStructure);
       return normalObjectStructure;
     })
     .catch((error) => console.log("Error getting user document: ", error));

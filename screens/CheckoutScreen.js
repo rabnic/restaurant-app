@@ -125,22 +125,22 @@ const CheckoutScreen = (props) => {
   }, [cart])
 
   const buy = async () => {
-    // await saveCustomerOrder(createOrder()).then(() => {
-    // })
+    await saveCustomerOrder(createOrder()).then(() => {
+    })
 
-    // console.log('first buy line', ready);
-    // const { error } = await presentPaymentSheet();
-    const error = false;
-    // console.log('await buy');
+    console.log('first buy line', ready);
+    const { error } = await presentPaymentSheet();
+    // const error = false;
+    console.log('await buy');
     if (error) {
       Alert.alert(`Error code:  ${error.code}`, error.message);
     } else {
       props.navigation.navigate("OrderConfirmed")
-      // await saveCustomerOrder(createOrder())
-      //   .then(() => {
-      //     clearCart();
-      //     props.navigation.navigate("OrderConfirmed")
-      //   })
+      await saveCustomerOrder(createOrder())
+        .then(() => {
+          clearCart();
+          props.navigation.navigate("OrderConfirmed")
+        })
     }
   }
 
