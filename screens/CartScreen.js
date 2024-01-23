@@ -38,8 +38,6 @@ const CartScreen = (props) => {
   console.log("cart screen====================--", user);
   const [value, setValue] = useState("");
 
-
-
   useEffect(() => {
     const getCartTotal = () => {
 
@@ -51,7 +49,6 @@ const CartScreen = (props) => {
     };
     getCartTotal();
   }, [cart])
- 
 
   return (
     <SafeAreaView className="pt-12 px-0 flex-1  bg-white">
@@ -195,7 +192,7 @@ const CartScreen = (props) => {
             mode="contained"
             buttonColor="#DD5A44"
             uppercase={true}
-            onPress={() => user ? props.navigation.navigate("Checkout") : props.navigation.navigate("SignIn")}
+            onPress={() => user ? props.navigation.navigate("Checkout") : props.navigation.navigate("SignIn", { from: "Cart" })}
             contentStyle={{ marginHorizontal: 4, height: 50 }}
           >
             Checkout

@@ -9,6 +9,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { UserContext } from "../contexts/UserContext";
 import { showMessage } from "react-native-flash-message";
 import { signOutUser } from "../services/firebase";
+import MyProfile from "./modals/MyProfile";
 
 const UserProfile = ({ navigation }) => {
   const { updateAuthUser } = useContext(AuthContext);
@@ -156,7 +157,7 @@ const UserProfile = ({ navigation }) => {
               style={{ width: 200, alignSelf: "center", marginTop: 50 }}
               textColor="#FFFFFF"
               buttonColor="#DD5A44"
-              onPress={() => navigation.navigate("SignIn")}
+              onPress={() => navigation.navigate("SignIn", { from: "Profile" })}
             >
               Go to Sign In
             </Button>
@@ -172,7 +173,7 @@ const UserProfile = ({ navigation }) => {
             height: hp(100),
           }}
         >
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
+          <MyProfile goBack={hideModal} />
         </Modal>
       </Portal>
     </SafeAreaView>

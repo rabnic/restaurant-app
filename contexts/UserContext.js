@@ -5,12 +5,19 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const createNewUser = ({ email, fullName, phoneNumber }) => {
-    setUser({ email, fullName, phoneNumber, favorites: [], orders: [] });
+  const createNewUser = (user) => {
+    setUser(user);
   }
+  // const createNewUser = ({ email, fullName, phoneNumber }) => {
+  //   setUser({ email, fullName, phoneNumber, favorites: [], orders: [] });
+  // }
 
-  const loadUserData = (user) => {
-
+  const saveOrderToHistory = (orderNum) => {
+    const orders = user.orders;
+    orders.push(orderNum)
+    setUser(prev => {
+      return { ...prev, orders: orders }
+    })
   }
 
   const clearUser = () => {
@@ -32,20 +39,20 @@ export const UserProvider = ({ children }) => {
   }
 
   const clearFavorites = () => {
-    const tempUser = { ...user};
+    const tempUser = { ...user };
     tempUser.favorites = [];
     setUser(tempUser);
   }
 
   const recordRefreshmentOrder = (newRefreshmentOrder) => {
-    const tempUser = { ...user};
+    const tempUser = { ...user };
     tempUser.orders.push(newRefreshmentOrder);
     setUser(tempUser);
   }
 
   console.log('user in context======', user)
   return (
-    <UserContext.Provider value={{ user, setUser, createNewUser, updateFavorites, clearFavorites, recordRefreshmentOrder, clearUser }}>
+    <UserContext.Provider value={{ user, setUser, createNewUser, updateFavorites, clearFavorites, recordRefreshmentOrder, clearUser, saveOrderToHistory }}>
       {children}
     </UserContext.Provider>
   );

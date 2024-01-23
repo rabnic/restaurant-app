@@ -176,6 +176,9 @@ export const registerUser = async (user) => {
       fullName: { stringValue: user.fullName },
       email: { stringValue: user.email },
       phoneNumber: { stringValue: user.phoneNumber },
+      addresses: { arrayValue: { values: user.addresses } },
+      orders: { arrayValue: { values: user.orders } },
+      favorites: { arrayValue: { values: user.favorites } },
     },
   };
   console.log(firebaseDocumentStructure);
@@ -201,14 +204,28 @@ export const registerUser = async (user) => {
 export const getUser = async (userEmail) => {
   const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${USERS}/${userEmail}`;
 
+  function formatArrayValues(response) {
+    if (response === undefined) {
+      return [];
+    } else {
+      return response.map(item => item.stringValue);
+    }
+  }
+
   return await fetch(url)
     .then((response) => response.json())
     .then((user) => {
+      console.log("###########---------------------------------", user);
+
       const normalObjectStructure = {
         email: user.fields.email.stringValue,
         fullName: user.fields.fullName.stringValue,
+        phoneNumber: user.fields.phoneNumber.stringValue,
+        addresses: formatArrayValues(user.fields.addresses.arrayValue.values),
+        orders: formatArrayValues(user.fields.orders.arrayValue.values),
+        favorites: formatArrayValues(user.fields.favorites.arrayValue.values),
       };
-      console.log("-----------------------------------",normalObjectStructure);
+      console.log("-----------------------------------", normalObjectStructure);
       return normalObjectStructure;
     })
     .catch((error) => console.log("Error getting user document: ", error));
@@ -260,7 +277,7 @@ export const saveCustomerOrder = async (order) => {
       creationDate: { stringValue: order.creationDate },
     },
   };
-  fetch(url, {
+  return await fetch(url, {
     method: "POST",
     body: JSON.stringify(firebaseDocumentStructure),
     headers: {
@@ -268,13 +285,7 @@ export const saveCustomerOrder = async (order) => {
     },
   })
     .then((response) => {
-      const responseData = response.json();
-      console.log('response', responseData)
-      return responseData;
-    })
-    .then(orderDoc => {
-      console.log('order created ', orderDoc);
-
+      return response.json();
     })
     .catch((err) => console.log("Failed to create order", err));
 };

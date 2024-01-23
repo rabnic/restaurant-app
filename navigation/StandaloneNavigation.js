@@ -80,14 +80,14 @@ const MainNavigation = () => {
         <Stack.Screen
           name="SignIn"
           component={SignInScreen}
-          options={{
+          options={({ navigation }) => ({
             headerTransparent: true,
             title: "",
             headerTintColor: "#777",
             headerTitleStyle: {
               fontWeight: "bold",
             },
-          }}
+          })}
         />
         <Stack.Screen
           name="SignUp"

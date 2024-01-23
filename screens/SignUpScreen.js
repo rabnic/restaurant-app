@@ -12,16 +12,25 @@ import * as Font from "expo-font";
 import { AuthContext } from "../contexts/AuthContext";
 import { UserContext } from "../contexts/UserContext";
 import { registerUser, signUpWithEmailAndPassword } from "../services/firebase";
+import { showMessage } from "react-native-flash-message";
 
 
-const SignUpScreen = ({ navigation }) => {
-const {user, setUser} = useContext(UserContext);
-const {authUser, updateAuthUser} = useContext(AuthContext);
+const SignUpScreen = ({ navigation, route }) => {
+  console.log('route', route);
+
+
+  const { user, setUser } = useContext(UserContext);
+  const { authUser, updateAuthUser } = useContext(AuthContext);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (user) {
+    navigation.goBack();
+  }
 
   const alertMessages = {
     'MISSING_PASSWORD': 'No password entered! \nPlease enter valid password',
@@ -31,6 +40,8 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
   }
 
   const handleSignUp = () => {
+    setIsLoading(true);
+
     // console.log(">>>  Register");
     // if (fullName.trim().length < 1 || email.trim().length < 1 || password.trim().length < 1 || phoneNumber.trim().length < 1) {
     //   Alert.alert('Sign Up Error:', alertMessages['EMPTY_INPUTS'], [
@@ -42,22 +53,45 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
     signUpWithEmailAndPassword(email.toLowerCase().trim(), password).then(
       async (response) => {
         if (response.status === "success") {
-          await registerUser({
+          const user = {
             fullName,
             email: email.toLowerCase().trim(),
-            phoneNumber
-          }).then(() => {
-            console.log("Registered yahaaaaaa");
-            updateAuthUser({ email, fullName, phoneNumber});
-          });
-          // setIsLoading(false);
+            phoneNumber,
+            addresses: [],
+            orders: [],
+            favorites: [],
+          }
+          await registerUser(user)
+            .then(() => {
+              console.log("Registered yahaaaaaa");
+              updateAuthUser(user);
+              showMessage({
+                message: "Successfully signed up!",
+                type: "success",
+                duration: 1400
+              });
+              setTimeout(() => {
+                setIsLoading(false);
+                if (route.params.from === "Cart") {
+                  navigation.navigate("Checkout")
+                } else if (route.params.from === "Profile") {
+                  navigation.navigate("BottomNavigation", { index: 3 })
+                }
+              }, 1500)
+            });
         } else {
           Alert.alert('Sign Up Error:', alertMessages[response.message], [
             { text: 'Ok', onPress: () => console.log('Sign In error Ok pressed') },
           ]);
+          setIsLoading(false);
         }
       }
-    );
+    ).catch((err) => {
+      Alert.alert('Sign Up Error:', alertMessages[err], [
+        { text: 'Ok', onPress: () => console.log('Sign In error Ok pressed') },
+      ]);
+      setIsLoading(false);
+    });
   };
 
   return (
@@ -125,6 +159,7 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
               mode="contained"
               buttonColor="#DD5A44"
               uppercase={true}
+              loading={isLoading}
               onPress={() => handleSignUp()}
               contentStyle={{
                 marginHorizontal: 4,
@@ -133,7 +168,7 @@ const {authUser, updateAuthUser} = useContext(AuthContext);
             >
               Sign Up
             </Button>
-            <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+            <TouchableOpacity onPress={() => navigation.navigate("SignIn", { ...route.params })}>
               <Text variant="bodyLarge" className="text-[#DD5A44]">
                 Already have an account? Sign In
               </Text>

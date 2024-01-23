@@ -8,7 +8,7 @@ const OrderConfirmationScreen = ({ navigation }) => {
   const animation = useRef(null);
   const [countDown, setCountDown] = useState(5);
   console.log('navigation', navigation.getState());
-  const { cart,clearCart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
 
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const OrderConfirmationScreen = ({ navigation }) => {
       <Text variant="headlineSmall" className="mb-6 font-bold text-center w-[80%]">
         Order successfully confirmed!
       </Text>
-      <Button
+      {/* <Button
         style={{ marginVertical: 5, width: "60%", fontWeight: "bold" }}
         mode="contained"
         buttonColor="#DD5A44"
@@ -55,7 +55,7 @@ const OrderConfirmationScreen = ({ navigation }) => {
         contentStyle={{ height: 50 }}
       >
         View My Orders
-      </Button>
+      </Button> */}
       <Text variant="bodyMedium" className="text-center w-[80%]">
         Or
       </Text>

@@ -19,16 +19,22 @@ import * as Font from "expo-font";
 import { AuthContext } from "../contexts/AuthContext";
 import { getUser, signInUserWithEmailAndPassword } from "../services/firebase";
 import { showMessage } from "react-native-flash-message";
+import { UserContext } from "../contexts/UserContext";
 
-const SignInScreen = ({navigation, route}) => {
+const SignInScreen = ({ navigation, route }) => {
+  const { user, setUser } = useContext(UserContext);
   const { authUser, updateAuthUser } = useContext(AuthContext)
- 
+
   // console.log('navigation',navigation);
-  // console.log('route',route);
+  console.log('route', route);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  if (user) {
+    // navigation.goBack();
+  }
 
   const alertMessages = {
     'INVALID_PASSWORD': 'Invalid password entered! \nPlease enter correct password',
@@ -38,7 +44,7 @@ const SignInScreen = ({navigation, route}) => {
 
   const handleSignIn = async () => {
     // console.log(">>>  Login");
-    // setIsLoading(true);
+    setIsLoading(true);
 
     // if (email.trim().length < 1 || password.trim().length < 1) {
     //   Alert.alert('Sign Up Error:', alertMessages['EMPTY_INPUTS'], [
@@ -48,21 +54,28 @@ const SignInScreen = ({navigation, route}) => {
     // }
 
     await signInUserWithEmailAndPassword(email.toLowerCase().trim(), password)
-      .then( async (response) => {
+      .then(async (response) => {
         // console.log("signed in---", response);
         if (response.status === "success") {
           const testingUser = await getUser(response.email)
           console.log("testinguser", testingUser)
-          updateAuthUser({ email: response.email, fullName: "Nicholas Rabalao" })
+          updateAuthUser(testingUser)
           setIsLoading(false);
           showMessage({
             message: "Successfully signed in!",
             type: "success",
           });
           setTimeout(() => {
-            navigation.goBack()
+            setIsLoading(false);
+            // navigation.goBack()
+            if (route.params.from === "Cart") {
+              navigation.navigate("Checkout")
+            } else if (route.params.from === "Profile") {
+              navigation.navigate("BottomNavigation", { index: 3 })
+            }
           }, 1500)
         } else {
+          setIsLoading(false);
           Alert.alert('Sign In Error:', response.message, [
             { text: 'Ok', onPress: () => console.log('Sign In error Ok pressed') },
           ]);
@@ -124,6 +137,7 @@ const SignInScreen = ({navigation, route}) => {
             mode="contained"
             buttonColor="#DD5A44"
             uppercase={true}
+            loading={isLoading}
             onPress={() => handleSignIn()}
             contentStyle={{
               marginHorizontal: 4,
@@ -132,7 +146,7 @@ const SignInScreen = ({navigation, route}) => {
           >
             Sign In
           </Button>
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp", { ...route.params })}>
             <Text variant="bodyLarge" className="text-[#DD5A44]">
               Don't have a account? Sign Up
             </Text>
